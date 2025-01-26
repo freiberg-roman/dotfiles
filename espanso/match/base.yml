@@ -1,0 +1,5 @@
+matches:
+  - trigger: ":cb"
+    replace: "{}"
+  - trigger: ":sb"
+    replace: "[]"
