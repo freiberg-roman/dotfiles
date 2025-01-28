@@ -17,13 +17,32 @@ vim.o.termguicolors = true
 
 require('lazy').setup({
   {
-    "nvim-tree/nvim-tree.lua",
-    lazy = false,
-    config = function()
-      require("nvim-tree").setup()
-      vim.api.nvim_set_keymap('n', '<leader>te', ':NvimTreeToggle<enter>', { noremap = true, silent = true })
-    end
+    "mikavilpas/yazi.nvim",
+    event = "VeryLazy",
+    keys = {
+      {
+        "<leader>-f",
+        mode = { "n", "v" },
+        "<cmd>Yazi<cr>",
+        desc = "Open yazi at the current file",
+      },
+      {
+        -- Open in the current working directory
+        "<leader>-d",
+        "<cmd>Yazi cwd<cr>",
+        desc = "Open the file manager in nvim's working directory",
+      },
+    },
+    ---@type YaziConfig
+    opts = {
+      -- if you want to open yazi instead of netrw, see below for more info
+      open_for_directories = false,
+      keymaps = {
+        show_help = "<f1>",
+      },
+    },
   },
+
   { 'echasnovski/mini.nvim', version = false },
 
   {
