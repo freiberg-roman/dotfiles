@@ -18,8 +18,10 @@ vim.o.termguicolors = true
 require('lazy').setup({
   {
     "nvim-tree/nvim-tree.lua",
+    lazy = false,
     config = function()
       require("nvim-tree").setup()
+      vim.api.nvim_set_keymap('n', '<leader>te', ':NvimTreeToggle<enter>', { noremap = true, silent = true })
     end
   },
   { 'echasnovski/mini.nvim', version = false },
