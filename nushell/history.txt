@@ -1,0 +1,10 @@
+echo $XDG_CONFIG_HOME
+echo $env.XDG_CONFIG_HOME
+export
+nvim
+exit
+http get https://www.freiberg-roman.com
+http get https://www.freiberg-roman.com | json
+http get https://www.freiberg-roman.com | to json
+nvim
+exit
