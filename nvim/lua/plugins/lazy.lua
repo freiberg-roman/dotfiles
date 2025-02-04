@@ -17,34 +17,12 @@ vim.o.termguicolors = true
 
 require('lazy').setup({
   {
-    "mikavilpas/yazi.nvim",
-    event = "VeryLazy",
-    keys = {
-      {
-        "<leader>-f",
-        mode = { "n", "v" },
-        "<cmd>Yazi<cr>",
-        desc = "Open yazi at the current file",
-      },
-      {
-        -- Open in the current working directory
-        "<leader>-d",
-        "<cmd>Yazi cwd<cr>",
-        desc = "Open the file manager in nvim's working directory",
-      },
-    },
-    ---@type YaziConfig
-    opts = {
-      -- if you want to open yazi instead of netrw, see below for more info
-      open_for_directories = false,
-      keymaps = {
-        show_help = "<f1>",
-      },
-    },
+    'stevearc/oil.nvim',
+    opts = {},
+    dependencies = { { "echasnovski/mini.icons", opts = {} } },
+    lazy = false,
   },
-
   { 'echasnovski/mini.nvim', version = false },
-
   {
     "folke/snacks.nvim",
     priority = 1000,
@@ -152,17 +130,6 @@ require('lazy').setup({
     },
     config = true
   },
-  -- {
-  --   'Exafunction/codeium.vim',
-  --   event = "InsertEnter",
-  --   config = function ()
-  --     -- Change '<C-g>' here to any keycode you like.
-  --     vim.keymap.set('i', '<C-e>', function () return vim.fn['codeium#Accept']() end, { expr = true, silent = true })
-  --     vim.keymap.set('i', '<c-n>', function() return vim.fn['codeium#CycleCompletions'](1) end, { expr = true, silent = true })
-  --     vim.keymap.set('i', '<c-p>', function() return vim.fn['codeium#CycleCompletions'](-1) end, { expr = true, silent = true })
-  --     vim.keymap.set('i', '<c-x>', function() return vim.fn['codeium#Clear']() end, { expr = true, silent = true })
-  --   end
-  -- },
   'onsails/lspkind.nvim',
   {
     "iamcco/markdown-preview.nvim",
