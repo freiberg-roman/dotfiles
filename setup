@@ -6,7 +6,7 @@ nix-env -iA \
 	nixpkgs.neovim \
 	nixpkgs.zoxide \
 	nixpkgs.nushell \
-	nixpkgs.node_23 \
+	nixpkgs.nodejs_23 \
 	mixpkgs.tmux \
 	mixpkgs.stow
 
