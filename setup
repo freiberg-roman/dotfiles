@@ -7,8 +7,8 @@ nix-env -iA \
 	nixpkgs.zoxide \
 	nixpkgs.nushell \
 	nixpkgs.nodejs_23 \
-	mixpkgs.tmux \
-	mixpkgs.stow
+	nixpkgs.tmux \
+	nixpkgs.stow
 
 # Linking the config
 stow .
