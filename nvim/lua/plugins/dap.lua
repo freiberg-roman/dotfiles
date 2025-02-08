@@ -5,6 +5,7 @@ local dapui = require("dapui")
 
 -- Setup dap-ui with default settings
 dapui.setup()
+require("dap-python").setup("python")
 
 -- Load launch.json configurations from the .vscode folder, if available.
 -- This will merge any found configurations into dap.configurations.
