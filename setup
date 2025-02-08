@@ -1,14 +1,2 @@
 #!/usr/bin/env bash
-
-# For use inside a devcontainer with nix package manager
-nix-channel --update
-nix-env -iA \
-	nixpkgs.neovim \
-	nixpkgs.zoxide \
-	nixpkgs.nushell \
-	nixpkgs.nodejs_23 \
-	nixpkgs.tmux \
-	nixpkgs.stow
-
-# Linking the config
 stow .
