@@ -126,12 +126,6 @@ require('lazy').setup({
     config = true
   },
   'onsails/lspkind.nvim',
-  {
-    "iamcco/markdown-preview.nvim",
-    cmd = { "MarkdownPreviewToggle", "MarkdownPreview", "MarkdownPreviewStop" },
-    ft = { "markdown" },
-    build = function() vim.fn["mkdp#util#install"]() end,
-  },
   "preservim/vim-pencil",
   {
     "epwalsh/obsidian.nvim",
@@ -310,8 +304,7 @@ require('lazy').setup({
     dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}
   },
   'theHamsta/nvim-dap-virtual-text',
-  'leoluz/nvim-dap-go',
-
+  "mfussenegger/nvim-dap-python",
   -- Git related plugins
   'tpope/vim-fugitive',
   'lewis6991/gitsigns.nvim',
