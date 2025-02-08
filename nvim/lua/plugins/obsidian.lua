@@ -1,8 +1,14 @@
+local obsidian_dir = os.getenv("OBSIDIAN_DIR")
+if not obsidian_dir then
+  print("OBSIDIAN_DIR is not set. Skipping Obsidian plugin setup.")
+  return
+end
+
 require("obsidian").setup({
   workspaces = {
     {
       name = "notes",
-      path = "/Users/freiberg/Library/Mobile Documents/iCloud~md~obsidian/Documents/rf2note"
+      path = obsidian_dir,
     },
   },
   completion = {
