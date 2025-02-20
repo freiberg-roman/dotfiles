@@ -179,10 +179,6 @@ require('lazy').setup({
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
   },
   {
-    "mistricky/codesnap.nvim",
-    build = "make",
-  },
-  {
     "NeogitOrg/neogit",
     lazy = false,
     dependencies = {
