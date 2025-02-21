@@ -1,7 +1,3 @@
-require('telescope').load_extension('git_worktree')
-
--- [[ Configure Telescope ]]
--- See `:help telescope` and `:help telescope.setup()`
 require('telescope').setup {
   defaults = {
     layout_strategy = "horizontal",
