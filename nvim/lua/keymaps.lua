@@ -1,4 +1,4 @@
-vim.api.nvim_set_keymap("n", "zz", ":ZenMode<enter>", { noremap=false, silent=true })
+vim.api.nvim_set_keymap("n", "<leader>zz", ":ZenMode<enter>", { noremap=false, silent=true })
 --
 -- files
 --
