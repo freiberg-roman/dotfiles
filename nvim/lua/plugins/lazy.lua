@@ -201,7 +201,6 @@ require('lazy').setup({
   },
   'folke/zen-mode.nvim',
   'tpope/vim-obsession',
-  'ThePrimeagen/git-worktree.nvim',
   -- "tpope/vim-furround",
   {
     'rmagatti/goto-preview',
