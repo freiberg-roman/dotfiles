@@ -1,6 +1,5 @@
 require('cmp').setup {
     config = function()
-      -- nvim-cmp setup
       local cmp = require 'cmp'
       local luasnip = require 'luasnip'
 
