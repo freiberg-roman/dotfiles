@@ -112,18 +112,18 @@ require('lazy').setup({
       }
     },
     keys = {
-      { "<leader>un", function() Snacks.notifier.hide() end, desc = "Dismiss All Notifications" },
-      { "<leader>bd", function() Snacks.bufdelete() end, desc = "Delete Buffer" },
-      { "<leader>gg", function() Snacks.lazygit() end, desc = "Lazygit" },
-      { "<leader>gb", function() Snacks.git.blame_line() end, desc = "Git Blame Line" },
-      { "<leader>gB", function() Snacks.gitbrowse() end, desc = "Git Browse" },
-      { "<leader>gf", function() Snacks.lazygit.log_file() end, desc = "Lazygit Current File History" },
-      { "<leader>gl", function() Snacks.lazygit.log() end, desc = "Lazygit Log (cwd)" },
-      { "<leader>cR", function() Snacks.rename.rename_file() end, desc = "Rename File" },
-      { "<c-/>",      function() Snacks.terminal() end, desc = "Toggle Terminal" },
-      { "<c-_>",      function() Snacks.terminal() end, desc = "which_key_ignore" },
-      { "]]",         function() Snacks.words.jump(vim.v.count1) end, desc = "Next Reference", mode = { "n", "t" } },
-      { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference", mode = { "n", "t" } },
+      { "<leader>un", function() Snacks.notifier.hide() end,           desc = "Dismiss All Notifications" },
+      { "<leader>bd", function() Snacks.bufdelete() end,               desc = "Delete Buffer" },
+      { "<leader>gg", function() Snacks.lazygit() end,                 desc = "Lazygit" },
+      { "<leader>gb", function() Snacks.git.blame_line() end,          desc = "Git Blame Line" },
+      { "<leader>gB", function() Snacks.gitbrowse() end,               desc = "Git Browse" },
+      { "<leader>gf", function() Snacks.lazygit.log_file() end,        desc = "Lazygit Current File History" },
+      { "<leader>gl", function() Snacks.lazygit.log() end,             desc = "Lazygit Log (cwd)" },
+      { "<leader>cR", function() Snacks.rename.rename_file() end,      desc = "Rename File" },
+      { "<c-/>",      function() Snacks.terminal() end,                desc = "Toggle Terminal" },
+      { "<c-_>",      function() Snacks.terminal() end,                desc = "which_key_ignore" },
+      { "]]",         function() Snacks.words.jump(vim.v.count1) end,  desc = "Next Reference",              mode = { "n", "t" } },
+      { "[[",         function() Snacks.words.jump(-vim.v.count1) end, desc = "Prev Reference",              mode = { "n", "t" } },
       {
         "<leader>N",
         desc = "Neovim News",
@@ -163,7 +163,8 @@ require('lazy').setup({
           Snacks.toggle.option("relativenumber", { name = "Relative Number" }):map("<leader>uL")
           Snacks.toggle.diagnostics():map("<leader>ud")
           Snacks.toggle.line_number():map("<leader>ul")
-          Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map("<leader>uc")
+          Snacks.toggle.option("conceallevel", { off = 0, on = vim.o.conceallevel > 0 and vim.o.conceallevel or 2 }):map(
+            "<leader>uc")
           Snacks.toggle.treesitter():map("<leader>uT")
           Snacks.toggle.option("background", { off = "light", on = "dark", name = "Dark Background" }):map("<leader>ub")
           Snacks.toggle.inlay_hints():map("<leader>uh")
@@ -175,7 +176,7 @@ require('lazy').setup({
     'MeanderingProgrammer/markdown.nvim',
     main = "render-markdown",
     opts = {},
-    name = 'render-markdown', -- Only needed if you have another plugin named markdown.nvim
+    name = 'render-markdown',                                                            -- Only needed if you have another plugin named markdown.nvim
     dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' }, -- if you use the mini.nvim suite
   },
   {
@@ -192,7 +193,7 @@ require('lazy').setup({
   "preservim/vim-pencil",
   {
     "epwalsh/obsidian.nvim",
-    version = "*",  -- recommended, use latest release instead of latest commit
+    version = "*", -- recommended, use latest release instead of latest commit
     lazy = true,
     ft = "markdown",
     dependencies = {
@@ -206,24 +207,24 @@ require('lazy').setup({
     'rmagatti/goto-preview',
     config = function()
       require('goto-preview').setup {
-        width = 120; -- Width of the floating window
-        height = 15; -- Height of the floating window
-        border = {"↖", "─" ,"┐", "│", "┘", "─", "└", "│"}; -- Border characters of the floating window
-        default_mappings = true;
-        debug = false; -- Print debug information
-        opacity = nil; -- 0-100 opacity level of the floating window where 100 is fully transparent.
-        resizing_mappings = false; -- Binds arrow keys to resizing the floating window.
-        post_open_hook = nil; -- A function taking two arguments, a buffer and a window to be ran as a hook.
+        width = 120, -- Width of the floating window
+        height = 15, -- Height of the floating window
+        border = { "↖", "─", "┐", "│", "┘", "─", "└", "│" }, -- Border characters of the floating window
+        default_mappings = true,
+        debug = false, -- Print debug information
+        opacity = nil, -- 0-100 opacity level of the floating window where 100 is fully transparent.
+        resizing_mappings = false, -- Binds arrow keys to resizing the floating window.
+        post_open_hook = nil, -- A function taking two arguments, a buffer and a window to be ran as a hook.
         references = { -- Configure the telescope UI for slowing the references cycling window.
           telescope = require("telescope.themes").get_dropdown({ hide_preview = false })
-        };
+        },
         -- These two configs can also be passed down to the goto-preview definition and implementation calls for one off "peak" functionality.
-        focus_on_open = true; -- Focus the floating window when opening it.
-        dismiss_on_move = false; -- Dismiss the floating window when moving the cursor.
-        force_close = true, -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
-        bufhidden = "wipe", -- the bufhidden option to set on the floating window. See :h bufhidden
-        stack_floating_preview_windows = true, -- Whether to nest floating windows
-        preview_window_title = { enable = true, position = "left" }, -- Whether 
+        focus_on_open = true,                                        -- Focus the floating window when opening it.
+        dismiss_on_move = false,                                     -- Dismiss the floating window when moving the cursor.
+        force_close = true,                                          -- passed into vim.api.nvim_win_close's second argument. See :h nvim_win_close
+        bufhidden = "wipe",                                          -- the bufhidden option to set on the floating window. See :h bufhidden
+        stack_floating_preview_windows = true,                       -- Whether to nest floating windows
+        preview_window_title = { enable = true, position = "left" }, -- Whether
       }
     end
   },
@@ -280,7 +281,7 @@ require('lazy').setup({
 
   'ray-x/go.nvim',
   'ray-x/guihua.lua',
-  { "catppuccin/nvim", as = "catppuccin" },
+  { "catppuccin/nvim",       as = "catppuccin" },
   { -- LSP Configuration & Plugins
     'neovim/nvim-lspconfig',
     dependencies = {
@@ -363,25 +364,24 @@ require('lazy').setup({
 
   {
     "rcarriga/nvim-dap-ui",
-    dependencies = {"mfussenegger/nvim-dap", "nvim-neotest/nvim-nio"}
+    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
   },
   'theHamsta/nvim-dap-virtual-text',
-  "mfussenegger/nvim-dap-python",
   -- Git related plugins
   'tpope/vim-fugitive',
   'lewis6991/gitsigns.nvim',
 
   'nvim-lualine/lualine.nvim', -- Fancier statusline
-  { "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
+  { "lukas-reineke/indent-blankline.nvim", main = "ibl",     opts = {} },
   -- {
-  --   'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines 
+  --   'numToStr/Comment.nvim', -- "gc" to comment visual regions/lines
   --   event = { "BufRead", "BufNewFile" },
   --   config = true
   -- },
   'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
 
   -- Fuzzy Finder (files, lsp, etc)
-  { 'nvim-telescope/telescope.nvim', branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
+  { 'nvim-telescope/telescope.nvim',       branch = '0.1.x', dependencies = { 'nvim-lua/plenary.nvim' } },
   'nvim-telescope/telescope-symbols.nvim',
   -- Fuzzy Finder Algorithm which requires local dependencies to be built. Only load if `make` is available
   { 'nvim-telescope/telescope-fzf-native.nvim', build = 'make', cond = vim.fn.executable 'make' == 1 },
@@ -392,4 +392,11 @@ require('lazy').setup({
     }
   },
   { 'huggingface/llm.nvim', },
+  {
+    "mfussenegger/nvim-dap-python",
+    keys = {
+      { "<leader>dPt", function() require('dap-python').test_method() end, desc = "Debug Method", ft = "python" },
+      { "<leader>dPc", function() require('dap-python').test_class() end,  desc = "Debug Class",  ft = "python" },
+    },
+  }
 })
