@@ -161,3 +161,4 @@ alias ke = kubectl exec -it
 ################################
 source ~/.zoxide.nu
 
+source "$HOME/.cargo/env.nu"

@@ -62,3 +62,4 @@ use std "path add"
 path add /opt/homebrew/bin
 path add /run/current-system/sw/bin
 zoxide init nushell | save -f ~/.zoxide.nu
+source "$HOME/.cargo/env.nu"
