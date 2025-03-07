@@ -1,16 +1,40 @@
-local dapui = require("dapui")
+vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
 
-dapui.setup()
-
+local dap = require("dap")
+local ui = require("dapui")
+ui.setup()
 require("dap-python").setup("python")
 
-vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
-vim.api.nvim_set_keymap("n", "<leader>dc", ":lua require('dap').continue()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>db", ":lua require('dap').toggle_breakpoint()<CR>",
-  { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>ds", ":lua require('dap').step_over()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>di", ":lua require('dap').step_into()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>do", ":lua require('dap').step_out()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>du", ":lua require('dapui').toggle()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>dp", ":lua require('dap').up()<CR>", { noremap = true, silent = true })
-vim.api.nvim_set_keymap("n", "<leader>dn", ":lua require('dap').down()<CR>", { noremap = true, silent = true })
+require("nvim-dap-virtual-text").setup({
+  display_callback = function(variable)
+    if #variable.value > 15 then
+      return " " .. string.sub(variable.value, 1, 15) .. "... "
+    end
+
+    return " " .. variable.value
+  end,
+})
+
+vim.keymap.set("n", "<leader>du", ui.toggle)
+vim.keymap.set("n", "<leader>db", dap.toggle_breakpoint)
+vim.keymap.set("n", "<leader>dc", dap.continue)
+vim.keymap.set("n", "<leader>ds", dap.step_over)
+vim.keymap.set("n", "<leader>di", dap.step_into)
+vim.keymap.set("n", "<leader>do", dap.step_out)
+vim.keymap.set("n", "<leader>dp", dap.up)
+vim.keymap.set("n", "<leader>dn", dap.down)
+vim.keymap.set("n", "<leader>de", function()
+  require("dapui").eval(nil, { enter = true })
+end)
+dap.listeners.before.attach.dapui_config = function()
+  ui.open()
+end
+dap.listeners.before.launch.dapui_config = function()
+  ui.open()
+end
+dap.listeners.before.event_terminated.dapui_config = function()
+  ui.close()
+end
+dap.listeners.before.event_exited.dapui_config = function()
+  ui.close()
+end
