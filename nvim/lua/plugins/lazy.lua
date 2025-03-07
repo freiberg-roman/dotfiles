@@ -332,13 +332,8 @@ require('lazy').setup({
     event = "BufReadPost",
     opts = {
       suggestion = {
-        enabled = not vim.g.ai_cmp,
-        auto_trigger = true,
-        hide_during_completion = vim.g.ai_cmp,
         keymap = {
-          accept = "<Tab>", -- handled by nvim-cmp / blink.cmp
-          next = "<leader>la",
-          prev = "<leader>ld",
+          accept = false,
         },
       },
       panel = { enabled = false },
@@ -357,6 +352,8 @@ require('lazy').setup({
   },
   {
     'saghen/blink.cmp',
-    version = '0.12.4',
+    version = '*',
+    dependencies = { "giuxtaposition/blink-cmp-copilot", "rafamadriz/friendly-snippets" },
+    opts_extend = { "sources.default" },
   }
 })
