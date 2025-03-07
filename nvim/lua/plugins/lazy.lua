@@ -300,12 +300,17 @@ require('lazy').setup({
       'nvim-treesitter/nvim-treesitter-textobjects',
     }
   },
-
   {
-    "rcarriga/nvim-dap-ui",
-    dependencies = { "mfussenegger/nvim-dap", "nvim-neotest/nvim-nio" }
+    "mfussenegger/nvim-dap",
+    dependencies = {
+      "rcarriga/nvim-dap-ui",
+      "theHamsta/nvim-dap-virtual-text",
+      "nvim-neotest/nvim-nio",
+      "mfussenegger/nvim-dap-python",
+      "williamboman/mason.nvim",
+    },
   },
-  'theHamsta/nvim-dap-virtual-text',
+
   -- Git related plugins
   'tpope/vim-fugitive',
   'lewis6991/gitsigns.nvim',
