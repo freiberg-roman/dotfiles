@@ -357,7 +357,6 @@ require('lazy').setup({
   },
   {
     'saghen/blink.cmp',
-    version = '*',
-    opts_extend = { "sources.default" }
+    version = '0.12.4',
   }
 })
