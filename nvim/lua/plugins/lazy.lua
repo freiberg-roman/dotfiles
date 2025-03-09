@@ -400,6 +400,9 @@ require('lazy').setup({
       }
     end,
     config = function(_, opts)
+      if vim.loop.os_uname().sysname == "Darwin" then
+        vim.env.XDG_RUNTIME_DIR = "/tmp"
+      end
       local chat = require("CopilotChat")
 
       vim.api.nvim_create_autocmd("BufEnter", {
