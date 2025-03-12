@@ -6,6 +6,7 @@ require('nvim-treesitter.configs').setup {
     'go', 'lua', 'python', 'rust', 'typescript', 'regex', 
     'bash', 'markdown', 'markdown_inline', 'kdl', 'sql', 'terraform',
     'html', 'css', 'javascript', 'yaml', 'json', 'toml',
+    'ninja', 'rst',
   },
 
   highlight = { enable = true },
