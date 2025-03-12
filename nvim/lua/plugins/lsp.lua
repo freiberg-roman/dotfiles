@@ -46,7 +46,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'pyright', 'ts_ls', 'rust_analyzer', 'dockerls', 'jsonls', 'yamlls' }
+local servers = { 'pyright', 'ruff', 'ts_ls', 'rust_analyzer', 'dockerls', 'jsonls', 'yamlls' }
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -63,7 +63,7 @@ for _, lsp in ipairs(servers) do
 end
 
 -- Turn on lsp status information
-require('fidget').setup()
+require('fidget').setup {}
 
 -- Example custom configuration for lua for config development
 --
@@ -92,6 +92,21 @@ require('lspconfig').lua_ls.setup {
       },
       -- Do not send telemetry data containing a randomized but unique identifier
       telemetry = { enable = false },
+    },
+  },
+}
+
+require('lspconfig').ruff.setup {
+  on_attach = function(client, bufnr)
+    -- Disable hover in favor of Pyright
+    client.server_capabilities.hoverProvider = false
+    on_attach(client, bufnr)
+  end,
+  capabilities = capabilities,
+  cmd_env = { RUFF_TRACE = "messages" },
+  init_options = {
+    settings = {
+      logLevel = "error",
     },
   },
 }
