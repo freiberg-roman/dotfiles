@@ -339,7 +339,7 @@ require('lazy').setup({
   {
     "CopilotC-Nvim/CopilotChat.nvim",
     dependencies = {
-      { "github/copilot.vim" },
+      { "zbirenbaum/copilot.lua" },
       { "nvim-lua/plenary.nvim" },
     },
     build = "make tiktoken",
@@ -394,6 +394,7 @@ require('lazy').setup({
         auto_insert_mode = true,
         question_header = "  " .. user .. " ",
         answer_header = "  Copilot ",
+        model = "claude-3.7-sonnet-thought",
         window = {
           width = 0.4,
         },
@@ -412,7 +413,6 @@ require('lazy').setup({
           vim.opt_local.number = false
         end,
       })
-
       chat.setup(opts)
     end,
   },
