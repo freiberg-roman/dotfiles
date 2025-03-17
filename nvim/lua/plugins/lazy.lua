@@ -307,6 +307,10 @@ require('lazy').setup({
   },
   {
     "zbirenbaum/copilot.lua",
+    init = function()
+      --vim.g.copilot_proxy = "http://your-proxy-host:port"
+      vim.g.copilot_proxy_strict_ssl = false
+    end,
     cmd = "Copilot",
     build = ":Copilot auth",
     event = "BufReadPost",
