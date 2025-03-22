@@ -46,7 +46,7 @@ require('mason').setup()
 
 -- Enable the following language servers
 -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-local servers = { 'pyright', 'ruff', 'ts_ls', 'rust_analyzer', 'dockerls', 'jsonls', 'yamlls' }
+local servers = { 'pyright', 'ruff', 'ts_ls', 'dockerls', 'jsonls', 'yamlls'}
 
 -- Ensure the servers above are installed
 require('mason-lspconfig').setup {
@@ -109,6 +109,10 @@ require('lspconfig').ruff.setup {
       logLevel = "error",
     },
   },
+}
+require('lspconfig').bacon_ls.setup {
+  on_attach = on_attach,
+  capabilities = capabilities,
 }
 
 vim.api.nvim_create_autocmd('FileType', {
