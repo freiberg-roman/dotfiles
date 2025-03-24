@@ -1,4 +1,4 @@
-vim.api.nvim_set_keymap("n", "<leader>zz", ":ZenMode<enter>", { noremap=false, silent=true })
+vim.api.nvim_set_keymap("n", "<leader>zz", "<cmd>ZenMode<enter>", { noremap=false, silent=true })
 --
 -- files
 --
@@ -16,7 +16,3 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 --
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
---
--- Noice
---
-vim.api.nvim_set_keymap("n", "<leader>nn", ":Noice dismiss<CR>", { noremap=true, silent=true })
