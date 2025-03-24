@@ -1,1 +1,0 @@
-alt - o : run-external "open" "-a" "/Applications/Obsidian.app/Contents/MacOS/Obsidian"
