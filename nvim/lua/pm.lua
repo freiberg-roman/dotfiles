@@ -20,7 +20,6 @@ require('lazy').setup({
     dependencies = { { "echasnovski/mini.icons", opts = {} } },
     lazy = false,
   },
-  { 'echasnovski/mini.nvim', version = false },
   {
     'MeanderingProgrammer/markdown.nvim',
     main = "render-markdown",
@@ -30,7 +29,6 @@ require('lazy').setup({
   },
   'onsails/lspkind.nvim',
   "preservim/vim-pencil",
-  'folke/zen-mode.nvim',
   'tpope/vim-obsession',
   {
     "folke/trouble.nvim",
