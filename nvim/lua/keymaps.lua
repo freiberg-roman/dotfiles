@@ -1,4 +1,3 @@
-vim.api.nvim_set_keymap("n", "<leader>zz", "<cmd>ZenMode<enter>", { noremap=false, silent=true })
 --
 -- files
 --
@@ -16,3 +15,9 @@ vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 --
 vim.keymap.set('n', 'k', "v:count == 0 ? 'gk' : 'k'", { expr = true, silent = true })
 vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = true })
+--
+-- Lua configuration
+--
+vim.keymap.set('n', '<leader><leader>x', '<cmd>source %<CR>')
+vim.keymap.set('n', '<leader>x', ':.lua<CR>')
+vim.keymap.set('v', '<leader>x', ':lua<CR>')
