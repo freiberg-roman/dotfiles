@@ -39,7 +39,6 @@ return {
       { '<leader>sg',    require('telescope.builtin').live_grep,                         { desc = '[S]earch by [G]rep' } },
       { '<leader>sd',    require('telescope.builtin').diagnostics,                       { desc = '[S]earch [D]iagnostics' } },
       { '<leader>sb',    require('telescope.builtin').buffers,                           { desc = '[ ] Find existing buffers' } },
-      { '<leader>sn',    '<cmd>lua require("telescope").extensions.notify.notify()<CR>', { desc = '' } },
       { '<leader>st',    ':TodoTelescope<CR>',                                           { desc = '' } },
       { '<leader><tab>', '<cmd>lua require("telescope.builtin").commands()<CR>',         { desc = '' } },
     },
