@@ -29,4 +29,7 @@ return {
       },
     })
   end,
+  keys = {
+    { "<leader>zz", "<cmd>ZenMode<enter>", { noremap=false, silent=true } }
+  }
 }
