@@ -10,6 +10,8 @@ vim.api.nvim_set_keymap("n", "<leader>ss", ":noh<CR>", { silent = true, noremap=
 vim.api.nvim_set_keymap("n", "<C-W>,", ":vertical resize -10<CR>", { noremap=true })
 vim.api.nvim_set_keymap("n", "<C-W>.", ":vertical resize +10<CR>", { noremap=true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
+vim.keymap.set("n", "<leader>v", "<cmd>vsplit<CR>", { silent = true })
+
 --
 -- Remap for dealing with word wrap
 --
