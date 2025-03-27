@@ -1,12 +1,11 @@
 return {
-  {'onsails/lspkind.nvim'},
+  { 'onsails/lspkind.nvim' },
   {
     'neovim/nvim-lspconfig',
     dependencies = {
       'saghen/blink.cmp',
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'j-hui/fidget.nvim',
       'folke/neoconf.nvim'
     },
 
@@ -57,7 +56,7 @@ return {
 
       -- Enable the following language servers
       -- Feel free to add/remove any LSPs that you want here. They will automatically be installed
-      local servers = { 'pylsp', 'ruff', 'ts_ls', 'dockerls', 'jsonls', 'yamlls'}
+      local servers = { 'pylsp', 'ruff', 'ts_ls', 'dockerls', 'jsonls', 'yamlls' }
 
       -- Ensure the servers above are installed
       require('mason-lspconfig').setup {
@@ -73,8 +72,6 @@ return {
         }
       end
 
-      -- Turn on lsp status information
-      require('fidget').setup {}
 
       -- Example custom configuration for lua for config development
       --
@@ -133,6 +130,23 @@ return {
             name = 'bash-language-server',
             cmd = { 'bash-language-server', 'start' },
           })
+        end,
+      })
+
+      vim.api.nvim_create_autocmd('LspAttach', {
+        callback = function(args)
+          local c = vim.lsp.get_client_by_id(args.data.client_id)
+          if not c then return end
+
+          if c.supports_method('textDocument/formatting') then
+            -- Format the current buffer on save
+            vim.api.nvim_create_autocmd('BufWritePre', {
+              buffer = args.buf,
+              callback = function()
+                vim.lsp.buf.format({ bufnr = args.buf, id = c.id })
+              end,
+            })
+          end
         end,
       })
     end,
