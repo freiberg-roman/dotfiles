@@ -23,16 +23,3 @@ for rc in ".bashrc" ".zshrc"; do
     printf "\n# Devbox global shell integration\n%s\n" "${SNIPPET}" >> "${TARGET}"
   fi
 done
-
-# 8️⃣ Source the appropriate rc immediately
-case "${SHELL##*/}" in
-  bash)
-    source "${HOME}/.bashrc"
-    ;;
-  zsh)
-    source "${HOME}/.zshrc"
-    ;;
-  *)
-    echo "Note: your shell is '${SHELL##*/}'. You may need to restart or source your rc file manually."
-    ;;
-esac
