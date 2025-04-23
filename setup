@@ -1,4 +1,14 @@
 #!/usr/bin/env bash
-mkdir -p ~/.config
-mkdir -p ~/.local/share/devbox/global/current/
+mkdir -p "${HOME}/.config"
+mkdir -p "${HOME}/.local/share/devbox/global/current"
+
+SCRIPT_DIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
+ln -sf "${SCRIPT_DIR}/devbox/devbox.json" \
+      "${HOME}/.local/share/devbox/global/current/devbox.json"
+ln -sf "${SCRIPT_DIR}/devbox/devbox.json" \
+      "${HOME}/.local/share/devbox/global/default/devbox.json"
+
+eval "$(devbox global shellenv --init-hook)"
+devbox global install
+
 stow .
