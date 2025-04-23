@@ -12,3 +12,27 @@ eval "$(devbox global shellenv --init-hook)"
 devbox global install
 
 stow .
+
+SNIPPET='eval "$(devbox global shellenv --init-hook)"'
+for rc in ".bashrc" ".zshrc"; do
+  TARGET="${HOME}/${rc}"
+  # create file if missing
+  [ -f "${TARGET}" ] || touch "${TARGET}"
+  # only append if not already present
+  if ! grep -Fxq "${SNIPPET}" "${TARGET}"; then
+    printf "\n# Devbox global shell integration\n%s\n" "${SNIPPET}" >> "${TARGET}"
+  fi
+done
+
+# 8️⃣ Source the appropriate rc immediately
+case "${SHELL##*/}" in
+  bash)
+    source "${HOME}/.bashrc"
+    ;;
+  zsh)
+    source "${HOME}/.zshrc"
+    ;;
+  *)
+    echo "Note: your shell is '${SHELL##*/}'. You may need to restart or source your rc file manually."
+    ;;
+esac
