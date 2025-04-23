@@ -27,13 +27,14 @@ vim.wo.signcolumn = 'yes'
 vim.cmd.colorscheme "catppuccin"
 
 --vim.cmd()
+vim.g.clipboard = 'osc52'
 vim.opt.clipboard = 'unnamedplus'
 
 -- Set completeopt to have a better completion experience
 vim.o.completeopt = 'menuone,noselect'
 
 -- Concealer for Neorg
-vim.o.conceallevel=2
+vim.o.conceallevel = 2
 
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
@@ -41,4 +42,3 @@ vim.o.conceallevel=2
 --  NOTE: Must happen before plugins are required (otherwise wrong leader will be used)
 vim.g.mapleader = ' '
 vim.g.maplocalleader = ' '
-
