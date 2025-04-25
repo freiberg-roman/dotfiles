@@ -2,5 +2,6 @@
 mkdir -p "${HOME}/.config"
 ln -sf "$(pwd)/nixpkgs" "${HOME}/.config/nixpkgs"
 nix-env --quiet --no-build-output --log-format bar -iA nixpkgs.myPackages
+rm -rf "${HOME}/.config/nixpkgs"
 
 stow .
