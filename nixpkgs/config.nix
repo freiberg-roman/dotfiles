@@ -4,7 +4,7 @@
       name = "dev-tools";
       paths = [
         gcc
-        glibc
+        # glibc
         gnumake
         neovim
         stow
@@ -13,6 +13,7 @@
         fzf
         nodejs_23
         python312
+        python312Packages.pip
         lazygit
         yazi
         rustup
