@@ -4,4 +4,8 @@ ln -sf "$(pwd)/nixpkgs" "${HOME}/.config/nixpkgs"
 nix-env --quiet --no-build-output --log-format bar -iA nixpkgs.myPackages
 rm -rf "${HOME}/.config/nixpkgs"
 
+# setting for npm global packages
+npm config set prefix "${HOME}/.cache/npm/global"
+mkdir -p "${HOME}/.cache/npm/global"
+
 stow .
