@@ -4,8 +4,8 @@
       name = "dev-tools";
       paths = [
         gcc
-        # glibc
         gnumake
+        gh
         neovim
         stow
         ripgrep
