@@ -7,5 +7,10 @@ rm -rf "${HOME}/.config/nixpkgs"
 # setting for npm global packages
 npm config set prefix "${HOME}/.cache/npm/global"
 mkdir -p "${HOME}/.cache/npm/global"
+# append to .zshrc
+# export PATH=~/.cache/npm/global/bin:$PATH
+# export NODE_PATH=~/.cache/npm/global/lib/node_modules
+echo 'export PATH=~/.cache/npm/global/bin:$PATH' >> "${HOME}/.zshrc"
+echo 'export NODE_PATH=~/.cache/npm/global/lib/node_modules' >> "${HOME}/.zshrc"
 
 stow .
