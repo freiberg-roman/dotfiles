@@ -16,6 +16,7 @@ return {
       },
     },
   },
+
   {
     "mrcjkb/rustaceanvim",
     dependencies = {
@@ -33,19 +34,14 @@ return {
           end, { desc = "Rust Debuggables", buffer = bufnr })
         end,
         default_settings = {
-          -- rust-analyzer language server configuration
           ["rust-analyzer"] = {
             cargo = {
               allFeatures = true,
               loadOutDirsFromCheck = true,
-              buildScripts = {
-                enable = true,
-              },
+              buildScripts = { enable = true },
             },
             checkOnSave = true,
-            diagnostics = {
-              enable = true,
-            },
+            diagnostics = { enable = true },
             procMacro = {
               enable = true,
               ignored = {
@@ -72,24 +68,29 @@ return {
       },
     },
     config = function(_, opts)
+      -- Ensure codelldb is installed via mason-nvim-dap
       require("mason-nvim-dap").setup({
         ensure_installed = { "codelldb" },
         automatic_installation = true,
       })
 
-      local mason_registry = require("mason-registry")
-      local package_path = mason_registry.get_package("codelldb"):get_install_path()
-      local codelldb = package_path .. "/extension/adapter/codelldb"
-      local library_path = package_path .. "/extension/lldb/lib/liblldb.dylib"
+      -- Compute Mason's install root and the codelldb package path
+      local install_root = vim.fn.stdpath("data") .. "/mason"
+      local pkg_path = install_root .. "/packages/codelldb"
+      local adapter_path = pkg_path .. "/extension/adapter/codelldb"
+
+      -- Determine platform-specific LLDB library
       local uname = vim.loop.os_uname().sysname
-      if uname == "Linux" then
-        library_path = package_path .. "/extension/lldb/lib/liblldb.so"
-      end
+      local lib_name = (uname == "Linux") and "liblldb.so" or "liblldb.dylib"
+      local lib_path = pkg_path .. "/extension/lldb/lib/" .. lib_name
+
+      -- Configure DAP adapter for Rust
       opts.dap = {
-        adapter = require("rustaceanvim.config").get_codelldb_adapter(codelldb, library_path),
+        adapter = require("rustaceanvim.config").get_codelldb_adapter(adapter_path, lib_path),
       }
 
+      -- Merge into global rustaceanvim config
       vim.g.rustaceanvim = vim.tbl_deep_extend("keep", vim.g.rustaceanvim or {}, opts or {})
     end,
-  }
+  },
 }

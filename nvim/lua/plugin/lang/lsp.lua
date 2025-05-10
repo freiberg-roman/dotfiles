@@ -118,10 +118,6 @@ return {
           },
         },
       }
-      require('lspconfig').bacon_ls.setup {
-        on_attach = on_attach,
-        capabilities = capabilities,
-      }
 
       vim.api.nvim_create_autocmd('FileType', {
         pattern = 'sh',

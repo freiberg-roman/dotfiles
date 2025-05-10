@@ -86,6 +86,7 @@ return {
         question_header = "  " .. user .. " ",
         answer_header = "  Copilot ",
         model = "claude-3.7-sonnet-thought",
+        context = { "buffers", "files" },
         window = {
           width = 0.4,
         },
