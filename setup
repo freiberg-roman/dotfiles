@@ -1,4 +1,5 @@
 #!/usr/bin/env bash
+nix-env -iA nixpkgs.stow
 stow .
 
 nix profile install \
@@ -6,7 +7,6 @@ nix profile install \
   nixpkgs#gnumake \
   nixpkgs#gh \
   nixpkgs#neovim \
-  nixpkgs#stow \
   nixpkgs#ripgrep \
   nixpkgs#tmux \
   nixpkgs#fzf \
