@@ -1,10 +1,23 @@
 #!/usr/bin/env bash
-mkdir -p "${HOME}/.config"
-ln -sf "$(pwd)/nixpkgs" "${HOME}/.config/nixpkgs"
-nix-env --quiet --no-build-output --log-format bar -iA nixpkgs.myPackages
-rm -rf "${HOME}/.config/nixpkgs"
+stow .
 
-# setting for npm global packages
+nix profile install \
+  nixpkgs#gcc \
+  nixpkgs#gnumake \
+  nixpkgs#gh \
+  nixpkgs#neovim \
+  nixpkgs#stow \
+  nixpkgs#ripgrep \
+  nixpkgs#tmux \
+  nixpkgs#fzf \
+  nixpkgs#nodejs_24 \
+  nixpkgs#python312 \
+  nixpkgs#python312Packages.pip \
+  nixpkgs#lazygit \
+  nixpkgs#yazi \
+  nixpkgs#rustup \
+  nixpkgs#libiconv
+
 npm config set prefix "${HOME}/.cache/npm/global"
 mkdir -p "${HOME}/.cache/npm/global"
 # append to .zshrc
@@ -12,5 +25,3 @@ mkdir -p "${HOME}/.cache/npm/global"
 # export NODE_PATH=~/.cache/npm/global/lib/node_modules
 echo 'export PATH=~/.cache/npm/global/bin:$PATH' >> "${HOME}/.zshrc"
 echo 'export NODE_PATH=~/.cache/npm/global/lib/node_modules' >> "${HOME}/.zshrc"
-
-stow .
