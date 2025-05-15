@@ -16,7 +16,8 @@ nix profile install \
   nixpkgs#lazygit \
   nixpkgs#yazi \
   nixpkgs#rustup \
-  nixpkgs#libiconv
+  nixpkgs#libiconv \
+  nixpkgs#prettierd
 
 npm config set prefix "${HOME}/.cache/npm/global"
 mkdir -p "${HOME}/.cache/npm/global"
