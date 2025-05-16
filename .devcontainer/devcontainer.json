@@ -1,0 +1,21 @@
+{
+	"name": "Mini-Dev",
+	"build": {
+		"context": ".",
+		"dockerfile": "Dockerfile"
+	},
+	"features": {
+		"ghcr.io/devcontainers/features/common-utils:2": {
+			"username": "roman",
+			"upgradePackages": true,
+			"installZsh": true,
+			"configureZshAsDefaultShell": true,
+			"installOhMyZsh": true
+		},
+		"ghcr.io/devcontainers/features/nix:1": {}
+	},
+	"runArgs": [
+		"--network=host"
+	],
+	"remoteUser": "roman"
+}
