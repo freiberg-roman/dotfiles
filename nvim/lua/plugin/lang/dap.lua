@@ -23,6 +23,7 @@ return {
       "nvim-neotest/nvim-nio",
       "mfussenegger/nvim-dap-python",
       "williamboman/mason.nvim",
+      "jay-babu/mason-nvim-dap.nvim",
     },
     config = function()
       vim.fn.sign_define('DapBreakpoint', { text = '●', texthl = 'DapBreakpoint', linehl = '', numhl = '' })
@@ -31,6 +32,60 @@ return {
       local ui = require("dapui")
       ui.setup()
       require("dap-python").setup("python")
+
+      require("mason-nvim-dap").setup({
+        ensure_installed = { "node2", "chrome-debug-adapter" },
+        automatic_installation = true,
+        handlers = {},
+      })
+
+      -- Node.js adapter
+      local mason_path = vim.fn.stdpath("data") .. "/mason/packages"
+      dap.adapters.node2 = {
+        type = "executable",
+        command = "node",
+        args = { mason_path .. "/node-debug2-adapter/out/src/nodeDebug.js" },
+      }
+      dap.configurations.javascript = {
+        {
+          name = "Launch file",
+          type = "node2",
+          request = "launch",
+          program = "${file}",
+          cwd = vim.fn.getcwd(),
+          sourceMaps = true,
+          protocol = "inspector",
+        },
+        {
+          name = "Attach",
+          type = "node2",
+          request = "attach",
+          processId = require("dap.utils").pick_process,
+          cwd = vim.fn.getcwd(),
+          sourceMaps = true,
+          protocol = "inspector",
+        },
+      }
+      dap.configurations.typescript = dap.configurations.javascript
+
+      -- Chrome adapter for client-side debugging
+      dap.adapters.chrome = {
+        type = "executable",
+        command = "node",
+        args = { mason_path .. "/chrome-debug-adapter/out/src/chromeDebug.js" },
+      }
+      dap.configurations.javascriptreact = {
+        {
+          name = "Debug with Chrome",
+          type = "chrome",
+          request = "launch",
+          url = "http://localhost:3000",
+          webRoot = "${workspaceFolder}",
+          sourceMaps = true,
+          protocol = "inspector",
+        },
+      }
+      dap.configurations.typescriptreact = dap.configurations.javascriptreact
 
       require("nvim-dap-virtual-text").setup({
         display_callback = function(variable)
@@ -50,11 +105,5 @@ return {
       end
     end,
   },
-  {
-    "jay-babu/mason-nvim-dap.nvim",
-    dependencies = {
-      "williamboman/mason.nvim",
-      "mfussenegger/nvim-dap",
-    },
-  },
+  -- mason-nvim-dap is loaded via nvim-dap dependencies above
 }
