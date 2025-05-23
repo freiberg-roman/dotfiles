@@ -65,7 +65,7 @@ return {
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       for _, lsp in ipairs(servers) do
-        if lsp ~= 'pylsp' and lsp ~= 'ruff' and lsp ~= 'lua_ls' then
+        if lsp ~= 'pylsp' and lsp ~= 'ruff' and lsp ~= 'lua_ls' and lsp ~= 'ts_ls' then
           require('lspconfig')[lsp].setup {
             on_attach = on_attach,
             capabilities = capabilities,
@@ -76,6 +76,7 @@ return {
       -- Per-language configurations
       require('plugin.lang.lsp.python').setup(on_attach, capabilities)
       require('plugin.lang.lsp.lua_ls').setup(on_attach, capabilities)
+      require('plugin.lang.lsp.ts_ls').setup(on_attach, capabilities)
       require('plugin.lang.lsp.bash').setup()
     end,
   },
