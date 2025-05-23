@@ -8,8 +8,8 @@ function M.setup(on_attach, capabilities)
       pylsp = {
         plugins = {
           pycodestyle = { enabled = false },
-          pyflakes   = { enabled = false },
-          mccabe     = { enabled = false },
+          pyflakes    = { enabled = false },
+          mccabe      = { enabled = false },
         },
       },
     },
