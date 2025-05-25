@@ -6,7 +6,6 @@ return {
       'saghen/blink.cmp',
       'williamboman/mason.nvim',
       'williamboman/mason-lspconfig.nvim',
-      'folke/neoconf.nvim'
     },
 
     config = function()

@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup(on_attach, capabilities)
-  require('lspconfig').tsserver.setup {
+  require('lspconfig').ts_ls.setup {
     on_attach = function(client, bufnr)
       -- disable tsserver formatting if using external formatter
       client.server_capabilities.documentFormattingProvider = false
@@ -15,4 +15,3 @@ function M.setup(on_attach, capabilities)
 end
 
 return M
-
