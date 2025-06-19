@@ -1,13 +1,5 @@
 local M = {}
 
-local path = require("lspconfig").util.path
-local function get_python_path()
-  if vim.env.VIRTUAL_ENV then
-    return path.join(vim.env.VIRTUAL_ENV, "bin", "python")
-  end
-  return vim.fn.exepath("python") or "python"
-end
-
 function M.setup(on_attach, capabilities)
   require('lspconfig').basedpyright.setup({
     on_attach = function(client, bufnr)
@@ -19,11 +11,17 @@ function M.setup(on_attach, capabilities)
       basedpyright = {
         analysis = {
           autoSearchPaths = true,
+          autoImportCompletions = true,
           diagnosticMode = "openFilesOnly",
+          typeCheckingMode = 'basic',
           useLibraryCodeForTypes = true,
-          typeCheckingMode = "all",
+          logLevel = "Error",
           diagnosticSeverityOverrides = {
             reportAny = false,
+            reportAttributeAccessIssue = false,
+            reportArgumentType = false,
+            reportAssignmentType = false,
+            reportReturnType = false,
             reportMissingTypeArgument = false,
             reportMissingTypeStubs = false,
             reportUnknownArgumentType = false,
@@ -32,15 +30,10 @@ function M.setup(on_attach, capabilities)
             reportUnknownVariableType = false,
             reportUnusedCallResult = false,
           },
-        },
+        }
       },
       python = {},
     },
-    before_init = function(_, config)
-      local python_path = get_python_path()
-      config.settings.python.pythonPath = python_path
-      vim.notify(python_path)
-    end,
   })
   -- require('lspconfig').ruff.setup {
   --   on_attach = function(client, bufnr)
