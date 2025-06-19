@@ -54,22 +54,14 @@ return {
       require('mason').setup()
 
       -- Enable the following language servers
-      local servers = { 'pylsp', 'ruff', 'ts_ls', 'dockerls', 'jsonls', 'yamlls', 'lua_ls' }
-
-      -- Ensure the servers above are installed
-      require('mason-lspconfig').setup {
-        ensure_installed = servers,
-        automatic_installation = true,
-      }
+      local servers = { 'dockerls', 'jsonls', 'yamlls' }
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       for _, lsp in ipairs(servers) do
-        if lsp ~= 'pylsp' and lsp ~= 'ruff' and lsp ~= 'lua_ls' and lsp ~= 'ts_ls' then
-          require('lspconfig')[lsp].setup {
-            on_attach = on_attach,
-            capabilities = capabilities,
-          }
-        end
+        require('lspconfig')[lsp].setup {
+          on_attach = on_attach,
+          capabilities = capabilities,
+        }
       end
 
       -- Per-language configurations
