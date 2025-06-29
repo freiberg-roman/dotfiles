@@ -85,7 +85,7 @@ return {
         auto_insert_mode = true,
         question_header = "  " .. user .. " ",
         answer_header = "  Copilot ",
-        model = "claude-3.7-sonnet-thought",
+        model = "copilot:claude-sonnet-4",
         context = { "buffers", "files" },
         window = {
           width = 0.4,
