@@ -1,5 +1,4 @@
 #!/usr/bin/env bash
-nix-env -iA nixpkgs.stow
 stow .
 
 nix profile install \
