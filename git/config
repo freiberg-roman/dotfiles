@@ -1,0 +1,6 @@
+[user]
+    name = Roman Freiberg
+    email = roman.sascha@googlemail.com
+
+[core]
+    editor = nvim
