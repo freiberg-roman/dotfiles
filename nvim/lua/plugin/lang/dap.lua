@@ -66,6 +66,17 @@ return {
             type = "",
             request = "launch",
           },
+          {
+            name = "Launch Chrome against Next.js",
+            type = "pwa-chrome",
+            request = "launch",
+            url = "http://localhost:3000", -- Assumes Next.js runs on port 3000
+            webRoot = "${workspaceFolder}",
+            sourceMaps = true,
+            protocol = "inspector",
+            port = 9222, -- A common debugging port, ensure it's not in use
+            userDataDir = false,
+          },
         }
       end
 
