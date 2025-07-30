@@ -1,6 +1,18 @@
 [user]
-    name = Roman Freiberg
+    name  = Roman Freiberg
     email = roman.sascha@googlemail.com
 
 [core]
     editor = nvim
+
+[rerere]
+    enabled = true
+
+[rebase]
+    updateRefs = true
+
+[alias]
+    graph = log --oneline --graph --decorate --all
+
+[worktree]
+    unlock = true
