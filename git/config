@@ -13,6 +13,8 @@
 
 [alias]
     graph = log --oneline --graph --decorate --all
+    st = status -s
+    unstage = reset HEAD --
 
 [worktree]
     unlock = true
