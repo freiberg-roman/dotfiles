@@ -27,7 +27,7 @@ vim.wo.signcolumn = 'yes'
 vim.cmd.colorscheme "catppuccin"
 
 --vim.cmd()
-vim.g.clipboard = 'osc52'
+-- vim.g.clipboard = 'osc52'
 vim.opt.clipboard = 'unnamedplus'
 
 -- Set completeopt to have a better completion experience
