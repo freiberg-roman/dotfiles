@@ -47,8 +47,6 @@ return {
           nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
           nmap('K', vim.lsp.buf.hover, 'Hover Documentation')
           nmap('<C-k>', vim.lsp.buf.signature_help, 'Signature Documentation')
-          vim.keymap.set({ 'n', 'v' }, '<leader>ca', vim.lsp.buf.code_action,
-            { buffer = bufnr, desc = 'LSP: [C]ode [A]ction', noremap = true, silent = true })
 
           -- Rust-specific keymap
           vim.keymap.set("n", "<leader>dd", function()

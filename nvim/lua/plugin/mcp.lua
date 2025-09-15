@@ -7,6 +7,8 @@ return {
   config = function()
     require("mcphub").setup({
       config = vim.fn.expand("~/.config/nvim/mcp/servers.json"),
+      auto_approve = true,
+      auto_toggle_mcp_servers = true,
       extensions = {
         copilotchat = {
           enabled = true,
