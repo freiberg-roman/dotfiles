@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup(on_attach, capabilities)
-  require('lspconfig').basedpyright.setup({
+  vim.lsp.config('basedpyright', {
     on_attach = function(client, bufnr)
       client.server_capabilities.document_formatting = false
       on_attach(client, bufnr)
@@ -35,7 +35,8 @@ function M.setup(on_attach, capabilities)
       python = {},
     },
   })
-  -- require('lspconfig').ruff.setup {
+  vim.lsp.enable('basedpyright')
+  -- vim.lsp.config('ruff', {
   --   on_attach = function(client, bufnr)
   --     client.server_capabilities.hoverProvider = false
   --     on_attach(client, bufnr)
@@ -47,7 +48,8 @@ function M.setup(on_attach, capabilities)
   --     },
   --   },
   --   capabilities = capabilities,
-  -- }
+  -- })
+  -- vim.lsp.enable('ruff')
 end
 
 return M

@@ -5,7 +5,7 @@ function M.setup(on_attach, capabilities)
   table.insert(runtime_path, 'lua/?.lua')
   table.insert(runtime_path, 'lua/?/init.lua')
 
-  require('lspconfig').lua_ls.setup {
+  vim.lsp.config('lua_ls', {
     on_attach = on_attach,
     capabilities = capabilities,
     settings = {
@@ -22,7 +22,8 @@ function M.setup(on_attach, capabilities)
         telemetry = { enable = false },
       },
     },
-  }
+  })
+  vim.lsp.enable('lua_ls')
 end
 
 return M
