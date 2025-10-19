@@ -1,7 +1,7 @@
 local M = {}
 
 function M.setup(on_attach, capabilities)
-  require('lspconfig').ts_ls.setup {
+  vim.lsp.config('ts_ls', {
     on_attach = function(client, bufnr)
       -- disable tsserver formatting if using external formatter
       client.server_capabilities.documentFormattingProvider = false
@@ -11,7 +11,8 @@ function M.setup(on_attach, capabilities)
     settings = {
       completions = { completeFunctionCalls = true },
     },
-  }
+  })
+  vim.lsp.enable('ts_ls')
 end
 
 return M

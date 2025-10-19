@@ -58,10 +58,11 @@ return {
 
       local capabilities = require('blink.cmp').get_lsp_capabilities()
       for _, lsp in ipairs(servers) do
-        require('lspconfig')[lsp].setup {
+        vim.lsp.config(lsp, {
           on_attach = on_attach,
           capabilities = capabilities,
-        }
+        })
+        vim.lsp.enable(lsp)
       end
 
       -- Per-language configurations
