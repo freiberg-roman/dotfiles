@@ -1,14 +1,14 @@
 --
 -- files
 --
-vim.api.nvim_set_keymap("n", "E", "$", { noremap=false })
-vim.api.nvim_set_keymap("n", "B", "^", { noremap=false })
-vim.api.nvim_set_keymap("n", "<leader>ss", ":noh<CR>", { silent = true, noremap=true })
+vim.api.nvim_set_keymap("n", "E", "$", { noremap = false })
+vim.api.nvim_set_keymap("n", "B", "^", { noremap = false })
+vim.api.nvim_set_keymap("n", "<leader>ss", ":noh<CR>", { silent = true, noremap = true })
 --
 -- splits
 --
-vim.api.nvim_set_keymap("n", "<C-W>,", ":vertical resize -10<CR>", { noremap=true })
-vim.api.nvim_set_keymap("n", "<C-W>.", ":vertical resize +10<CR>", { noremap=true })
+vim.api.nvim_set_keymap("n", "<C-W>,", ":vertical resize -10<CR>", { noremap = true })
+vim.api.nvim_set_keymap("n", "<C-W>.", ":vertical resize +10<CR>", { noremap = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set("n", "<leader>v", "<cmd>vsplit<CR>", { silent = true })
 
@@ -23,3 +23,6 @@ vim.keymap.set('n', 'j', "v:count == 0 ? 'gj' : 'j'", { expr = true, silent = tr
 vim.keymap.set('n', '<leader><leader>x', '<cmd>source %<CR>')
 vim.keymap.set('n', '<leader>x', ':.lua<CR>')
 vim.keymap.set('v', '<leader>x', ':lua<CR>')
+
+-- Explicitly restore default 's' (substitute one char enter insert)
+vim.keymap.set('n', 's', 's', { noremap = true })
