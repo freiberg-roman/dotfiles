@@ -36,6 +36,11 @@ vim.o.completeopt = 'menuone,noselect'
 -- Concealer for Neorg
 vim.o.conceallevel = 2
 
+-- Tab settings
+vim.o.tabstop = 4
+vim.o.shiftwidth = 4
+vim.o.expandtab = true
+
 -- [[ Basic Keymaps ]]
 -- Set <space> as the leader key
 -- See `:help mapleader`
