@@ -1,27 +1,13 @@
 #!/usr/bin/env bash
-stow .
+set -e
 
-nix profile install \
-  nixpkgs#gcc \
-  nixpkgs#gnumake \
-  nixpkgs#gh \
-  nixpkgs#neovim \
-  nixpkgs#ripgrep \
-  nixpkgs#tmux \
-  nixpkgs#fzf \
-  nixpkgs#nodejs_24 \
-  nixpkgs#python312 \
-  nixpkgs#python312Packages.pip \
-  nixpkgs#lazygit \
-  nixpkgs#yazi \
-  nixpkgs#rustup \
-  nixpkgs#libiconv \
-  nixpkgs#prettierd
+cd "$(dirname "$0")"
 
-npm config set prefix "${HOME}/.cache/npm/global"
-mkdir -p "${HOME}/.cache/npm/global"
-# append to .zshrc
-# export PATH=~/.cache/npm/global/bin:$PATH
-# export NODE_PATH=~/.cache/npm/global/lib/node_modules
-echo 'export PATH=~/.cache/npm/global/bin:$PATH' >> "${HOME}/.zshrc"
-echo 'export NODE_PATH=~/.cache/npm/global/lib/node_modules' >> "${HOME}/.zshrc"
+# Stow dotfiles
+stow --verbose --target="$HOME" \
+  nvim \
+  tmux \
+  git \
+  ghostty \
+  nix \
+  opencode
