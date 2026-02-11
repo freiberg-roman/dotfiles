@@ -1,8 +1,10 @@
 local M = {}
 
-function M.setup(on_attach, capabilities)
+function M.setup(capabilities)
   vim.lsp.config('ty', {
-    on_attach = on_attach,
+    on_attach = function(client, _)
+      client.server_capabilities.documentFormattingProvider = false
+    end,
     capabilities = capabilities,
     settings = {
       ty = {
@@ -14,9 +16,8 @@ function M.setup(on_attach, capabilities)
   vim.lsp.enable('ty')
 
   vim.lsp.config('ruff', {
-    on_attach = function(client, bufnr)
+    on_attach = function(client, _)
       client.server_capabilities.hoverProvider = false
-      on_attach(client, bufnr)
     end,
     capabilities = capabilities,
     init_options = {
