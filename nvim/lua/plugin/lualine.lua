@@ -1,5 +1,6 @@
 return {
   'nvim-lualine/lualine.nvim',
+  event = "VeryLazy",
   config = function()
     require('lualine').setup {
       options = {
@@ -13,8 +14,8 @@ return {
         lualine_c = {},
         lualine_x = {
           {
-            require("noice").api.status.command.get,
-            cond = require("noice").api.status.command.has,
+            function() return require("noice").api.status.command.get() end,
+            cond = function() return package.loaded["noice"] and require("noice").api.status.command.has() end,
             color = { fg = "#ff9e64" },
           },
         },

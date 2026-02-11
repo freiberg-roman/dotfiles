@@ -1,14 +1,14 @@
 --
 -- files
 --
-vim.api.nvim_set_keymap("n", "E", "$", { noremap = false })
-vim.api.nvim_set_keymap("n", "B", "^", { noremap = false })
-vim.api.nvim_set_keymap("n", "<leader>ss", ":noh<CR>", { silent = true, noremap = true })
+vim.keymap.set("n", "E", "$", { noremap = false })
+vim.keymap.set("n", "B", "^", { noremap = false })
+vim.keymap.set("n", "<leader>ss", ":noh<CR>", { silent = true, noremap = true })
 --
 -- splits
 --
-vim.api.nvim_set_keymap("n", "<C-W>,", ":vertical resize -10<CR>", { noremap = true })
-vim.api.nvim_set_keymap("n", "<C-W>.", ":vertical resize +10<CR>", { noremap = true })
+vim.keymap.set("n", "<C-W>,", ":vertical resize -10<CR>", { noremap = true })
+vim.keymap.set("n", "<C-W>.", ":vertical resize +10<CR>", { noremap = true })
 vim.keymap.set({ 'n', 'v' }, '<Space>', '<Nop>', { silent = true })
 vim.keymap.set("n", "<leader>v", "<cmd>vsplit<CR>", { silent = true })
 
