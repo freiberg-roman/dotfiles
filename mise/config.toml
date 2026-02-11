@@ -1,0 +1,10 @@
+[tools]
+fnox = "latest"
+gh = "latest"
+jj = "latest"
+neovim = "latest"
+opencode = "latest"
+python = "3.11"
+ruff = "latest"
+ty = "latest"
+uv = "latest"

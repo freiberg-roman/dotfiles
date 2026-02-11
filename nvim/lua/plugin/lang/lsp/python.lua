@@ -1,55 +1,30 @@
 local M = {}
 
 function M.setup(on_attach, capabilities)
-  vim.lsp.config('basedpyright', {
+  vim.lsp.config('ty', {
+    on_attach = on_attach,
+    capabilities = capabilities,
+    settings = {
+      ty = {
+        analysis = {
+        },
+      },
+    },
+  })
+  vim.lsp.enable('ty')
+
+  vim.lsp.config('ruff', {
     on_attach = function(client, bufnr)
-      client.server_capabilities.document_formatting = false
+      client.server_capabilities.hoverProvider = false
       on_attach(client, bufnr)
     end,
     capabilities = capabilities,
-    settings = {
-      basedpyright = {
-        analysis = {
-          autoSearchPaths = true,
-          autoImportCompletions = true,
-          diagnosticMode = "openFilesOnly",
-          typeCheckingMode = 'basic',
-          useLibraryCodeForTypes = true,
-          logLevel = "Error",
-          diagnosticSeverityOverrides = {
-            reportAny = false,
-            reportAttributeAccessIssue = false,
-            reportArgumentType = false,
-            reportAssignmentType = false,
-            reportReturnType = false,
-            reportMissingTypeArgument = false,
-            reportMissingTypeStubs = false,
-            reportUnknownArgumentType = false,
-            reportUnknownMemberType = false,
-            reportUnknownParameterType = false,
-            reportUnknownVariableType = false,
-            reportUnusedCallResult = false,
-          },
-        }
-      },
-      python = {},
-    },
+    init_options = {
+      settings = {
+      }
+    }
   })
-  vim.lsp.enable('basedpyright')
-  -- vim.lsp.config('ruff', {
-  --   on_attach = function(client, bufnr)
-  --     client.server_capabilities.hoverProvider = false
-  --     on_attach(client, bufnr)
-  --   end,
-  --   cmd_env = { RUFF_TRACE = "messages" },
-  --   init_options = {
-  --     settings = {
-  --       logLevel = "error",
-  --     },
-  --   },
-  --   capabilities = capabilities,
-  -- })
-  -- vim.lsp.enable('ruff')
+  vim.lsp.enable('ruff')
 end
 
 return M

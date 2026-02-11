@@ -4,10 +4,19 @@ set -e
 cd "$(dirname "$0")"
 
 # Stow dotfiles
-stow --verbose --target="$HOME" \
+stow --verbose \
   nvim \
   tmux \
   git \
   ghostty \
-  nix \
-  opencode
+  opencode \
+  mise
+
+# Install mise if not already installed
+if ! command -v mise &>/dev/null; then
+  echo "Installing mise..."
+  curl -fsSL https://mise.run | sh
+fi
+
+# Install all tools defined in mise config
+mise install

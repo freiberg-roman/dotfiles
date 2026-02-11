@@ -69,7 +69,6 @@ return {
       require('plugin.lang.lsp.python').setup(on_attach, capabilities)
       require('plugin.lang.lsp.lua_ls').setup(on_attach, capabilities)
       require('plugin.lang.lsp.ts_ls').setup(on_attach, capabilities)
-      require('plugin.lang.lsp.bash').setup()
     end,
   },
 }
