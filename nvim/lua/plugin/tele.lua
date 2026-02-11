@@ -18,11 +18,7 @@ return {
         defaults = {
           layout_strategy = "horizontal",
           layout_config = {
-            horizontal = { width = 0.95, height = 0.95 },
-            preview_width = 0.65,
-          },
-          pickers = {
-            find_files = { theme = "dropdown" },
+            horizontal = { width = 0.95, height = 0.95, preview_width = 0.65 },
           },
           mappings = {
             i = {
@@ -32,6 +28,9 @@ return {
               ['<C-k>'] = require('telescope.actions').move_selection_previous,
             },
           },
+        },
+        pickers = {
+          find_files = { theme = "dropdown" },
         },
       }
     end,

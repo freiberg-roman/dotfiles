@@ -29,6 +29,17 @@ local function focus_terminal()
   end
 end
 
+local function close_terminal()
+  if term_state.win and vim.api.nvim_win_is_valid(term_state.win) then
+    vim.api.nvim_win_close(term_state.win, true)
+  end
+  term_state.win = nil
+  if term_state.prev_win and vim.api.nvim_win_is_valid(term_state.prev_win) then
+    vim.api.nvim_set_current_win(term_state.prev_win)
+  end
+  term_state.prev_win = nil
+end
+
 local function open_terminal()
   term_state.prev_win = vim.api.nvim_get_current_win()
   if term_is_valid() and term_state.win and vim.api.nvim_win_is_valid(term_state.win) then
@@ -46,7 +57,10 @@ local function open_terminal()
     vim.cmd('terminal')
     term_state.buf = vim.api.nvim_get_current_buf()
     vim.api.nvim_buf_set_name(term_state.buf, 'TermToggle')
-    vim.keymap.set('t', '<Esc>', [[<C-\><C-n>]], { buffer = term_state.buf, silent = true })
+    vim.keymap.set('t', '<Esc>', function()
+      vim.api.nvim_feedkeys(vim.keycode([[<C-\><C-n>]]), 'n', false)
+      vim.schedule(function() close_terminal() end)
+    end, { buffer = term_state.buf, silent = true })
     focus_terminal()
   end
   vim.schedule(function()
@@ -56,17 +70,6 @@ local function open_terminal()
       end
     end
   end)
-end
-
-local function close_terminal()
-  if term_state.win and vim.api.nvim_win_is_valid(term_state.win) then
-    vim.api.nvim_win_close(term_state.win, true)
-  end
-  term_state.win = nil
-  if term_state.prev_win and vim.api.nvim_win_is_valid(term_state.prev_win) then
-    vim.api.nvim_set_current_win(term_state.prev_win)
-  end
-  term_state.prev_win = nil
 end
 
 local function toggle_terminal()
@@ -81,9 +84,3 @@ local function toggle_terminal()
 end
 
 vim.keymap.set('n', '<leader>t', toggle_terminal, { desc = 'Toggle terminal' })
-vim.keymap.set('t', '<leader>t', function()
-  if vim.fn.mode() == 't' then
-    vim.api.nvim_feedkeys(vim.keycode([[<C-\><C-n>]]), 'n', false)
-  end
-  toggle_terminal()
-end, { desc = 'Toggle terminal' })
