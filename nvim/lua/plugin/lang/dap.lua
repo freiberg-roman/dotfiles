@@ -23,7 +23,7 @@ return {
         end,
       })
       require("mason-nvim-dap").setup({
-        ensure_installed       = { "python", "js-debug-adapter" },
+        ensure_installed       = { "python", "js-debug-adapter", "codelldb" },
         automatic_installation = true,
       })
       dap.listeners.before.launch.dapui_config           = function() dapui.open() end
