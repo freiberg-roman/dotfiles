@@ -45,6 +45,14 @@ return {
           vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
             vim.lsp.buf.format({ async = false })
           end, { desc = 'Format current buffer with LSP' })
+
+          -- Format on save (sync, 500ms timeout, current buffer only)
+          vim.api.nvim_create_autocmd('BufWritePre', {
+            buffer = bufnr,
+            callback = function()
+              vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 500 })
+            end,
+          })
         end,
       })
 
