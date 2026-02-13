@@ -8,7 +8,6 @@ return {
       "mfussenegger/nvim-dap-python",
       "williamboman/mason.nvim",
       "jay-babu/mason-nvim-dap.nvim",
-      "Joakker/lua-json5",
     },
     config = function()
       ----------------------------------------------------------------------
@@ -62,11 +61,6 @@ return {
       for _, language in ipairs(js_langs) do
         dap.configurations[language] = {
           {
-            name = "----- launch.json configs (if available) ↑ -----",
-            type = "",
-            request = "launch",
-          },
-          {
             name = "Launch Chrome against Next.js",
             type = "pwa-chrome",
             request = "launch",
@@ -80,12 +74,6 @@ return {
         }
       end
 
-      if vim.fn.filereadable(".vscode/launch.json") then
-        require("dap.ext.vscode").load_launchjs(nil, {
-          ["pwa-node"]   = js_langs,
-          ["pwa-chrome"] = js_langs,
-        })
-      end
     end,
 
     ------------------------------------------------------------------------
