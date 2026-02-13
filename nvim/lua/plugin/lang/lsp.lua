@@ -43,15 +43,22 @@ return {
           nmap('gD', vim.lsp.buf.declaration, '[G]oto [D]eclaration')
 
           vim.api.nvim_buf_create_user_command(bufnr, 'Format', function(_)
-            vim.lsp.buf.format({ async = false })
-          end, { desc = 'Format current buffer with LSP' })
+            vim.lsp.buf.format({
+              async = false,
+              filter = function(client) return client.name == 'ruff' end,
+            })
+          end, { desc = 'Format current buffer with LSP (ruff)' })
+        end,
+      })
 
-          -- Format on save (sync, 500ms timeout, current buffer only)
-          vim.api.nvim_create_autocmd('BufWritePre', {
-            buffer = bufnr,
-            callback = function()
-              vim.lsp.buf.format({ bufnr = bufnr, timeout_ms = 500 })
-            end,
+      vim.api.nvim_create_autocmd('BufWritePre', {
+        group = vim.api.nvim_create_augroup('LspFormatOnSave', { clear = true }),
+        callback = function(args)
+          if #vim.lsp.get_clients({ bufnr = args.buf }) == 0 then return end
+          vim.lsp.buf.format({
+            bufnr = args.buf,
+            timeout_ms = 1000,
+            filter = function(client) return client.name == 'ruff' end,
           })
         end,
       })
