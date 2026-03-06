@@ -9,9 +9,9 @@ return { -- Highlight, edit, and navigate code
   config = function()
     require('nvim-treesitter.configs').setup {
       ensure_installed = {
-        'go', 'lua', 'python', 'rust', 'typescript', 'regex',
+        'go', 'lua', 'python', 'rust', 'regex',
         'bash', 'markdown', 'markdown_inline', 'kdl', 'sql', 'terraform',
-        'html', 'css', 'javascript', 'yaml', 'json', 'toml',
+        'html', 'css', 'yaml', 'json', 'toml',
         'ninja', 'rst', 'ron'
       },
       highlight = { enable = true },
