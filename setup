@@ -3,6 +3,36 @@ set -e
 
 cd "$(dirname "$0")"
 
+
+# Install mise if not already installed
+if ! command -v mise &>/dev/null; then
+  echo "Installing mise..."
+  curl -fsSL https://mise.run | sh
+fi
+
+export PATH="$HOME/.local/bin:$PATH"
+
+DOTFILES_DIR="$(pwd)"
+
+# Install stow if not already installed
+if ! command -v stow &>/dev/null; then
+  echo "Installing GNU stow locally from source..."
+  BUILD_DIR=$(mktemp -d)
+  STOW_VERSION="2.4.1"
+  
+  cd "$BUILD_DIR"
+  curl -O http://ftp.gnu.org/gnu/stow/stow-${STOW_VERSION}.tar.gz
+  tar -xzf stow-${STOW_VERSION}.tar.gz
+  cd stow-${STOW_VERSION}
+  
+  ./configure --prefix="$HOME/.local"
+  make
+  make install
+  
+  cd "$DOTFILES_DIR" # Return to dotfiles dir
+  rm -rf "$BUILD_DIR"
+fi
+
 # Stow dotfiles
 stow --verbose \
   nvim \
@@ -11,12 +41,6 @@ stow --verbose \
   ghostty \
   opencode \
   mise
-
-# Install mise if not already installed
-if ! command -v mise &>/dev/null; then
-  echo "Installing mise..."
-  curl -fsSL https://mise.run | sh
-fi
 
 # Install all tools defined in mise config
 mise install
