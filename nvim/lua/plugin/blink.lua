@@ -6,7 +6,7 @@ return {
   config = function()
     require('blink.cmp').setup({
       sources = {
-        default = { "lsp", "path", "snippets", "buffer" },
+        default = { "path", "snippets", "buffer" },
       }
     })
   end,

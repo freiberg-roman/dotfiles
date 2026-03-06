@@ -6,8 +6,6 @@ return {
       "nvim-neotest/nvim-nio",
       "theHamsta/nvim-dap-virtual-text",
       "mfussenegger/nvim-dap-python",
-      "williamboman/mason.nvim",
-      "jay-babu/mason-nvim-dap.nvim",
     },
     config = function()
       ----------------------------------------------------------------------
@@ -21,10 +19,6 @@ return {
           return #v.value > 15 and (" " .. v.value:sub(1, 15) .. "…") or (" " .. v.value)
         end,
       })
-      require("mason-nvim-dap").setup({
-        ensure_installed       = { "python", "js-debug-adapter", "codelldb" },
-        automatic_installation = true,
-      })
       dap.listeners.before.launch.dapui_config           = function() dapui.open() end
       dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
       dap.listeners.before.event_exited.dapui_config     = function() dapui.close() end
@@ -33,46 +27,6 @@ return {
       ----------------------------------------------------------------------
       require("dap-python").setup("python")
 
-
-      ----------------------------------------------------------------------
-      -- 2 JS --------------------------------------------------------------
-      ----------------------------------------------------------------------
-      local js_debug_path = vim.fn.stdpath("data")
-          .. "/mason/packages/js-debug-adapter/js-debug/src/dapDebugServer.js"
-
-      dap.adapters["pwa-node"] = {
-        type = "server",
-        host = "::1",
-        port = "${port}",
-        executable = {
-          command = "node",
-          args    = { js_debug_path, "${port}" },
-        },
-      }
-
-
-      dap.adapters["pwa-chrome"] = {
-        type = "server",
-        host = "::1",
-        port = "${port}",
-        executable = { command = "node", args = { js_debug_path, "${port}" } },
-      }
-      local js_langs = { "javascript", "typescript", "javascriptreact", "typescriptreact" }
-      for _, language in ipairs(js_langs) do
-        dap.configurations[language] = {
-          {
-            name = "Launch Chrome against Next.js",
-            type = "pwa-chrome",
-            request = "launch",
-            url = "http://localhost:3000", -- Assumes Next.js runs on port 3000
-            webRoot = "${workspaceFolder}",
-            sourceMaps = true,
-            protocol = "inspector",
-            port = 9222, -- A common debugging port, ensure it's not in use
-            userDataDir = false,
-          },
-        }
-      end
 
     end,
 
