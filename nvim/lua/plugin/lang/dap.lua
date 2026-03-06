@@ -36,7 +36,12 @@ return {
     keys = {
       { "<leader>du", function() require("dapui").toggle() end,                    desc = "Toggle DAP UI" },
       { "<leader>db", function() require("dap").toggle_breakpoint() end,           desc = "Toggle Breakpoint" },
-      { "<leader>dc", function() require("dap").continue() end,                    desc = "Continue / Run" },
+      { "<leader>dc", function() 
+        if vim.fn.filereadable(".vscode/launch.json") then
+          require("dap.ext.vscode").load_launchjs(nil, { python = { "python" } })
+        end
+        require("dap").continue() 
+      end, desc = "Continue / Run" },
       { "<leader>ds", function() require("dap").step_over() end,                   desc = "Step Over" },
       { "<leader>di", function() require("dap").step_into() end,                   desc = "Step Into" },
       { "<leader>do", function() require("dap").step_out() end,                    desc = "Step Out" },
