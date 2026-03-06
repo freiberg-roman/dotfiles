@@ -22,7 +22,6 @@ require('lazy').setup({
 		name = 'render-markdown',
 		dependencies = { 'nvim-treesitter/nvim-treesitter', 'nvim-tree/nvim-web-devicons' },
 	},
-	"preservim/vim-pencil",
 	'tpope/vim-obsession',
 
 	{
@@ -39,11 +38,4 @@ require('lazy').setup({
 	-- Git related plugins
 	{ "lukas-reineke/indent-blankline.nvim", main = "ibl", opts = {} },
 	'tpope/vim-sleuth', -- Detect tabstop and shiftwidth automatically
-	-- Fuzzy Finder (files, lsp, etc)
-	{
-		"folke/twilight.nvim",
-		ft = "markdown",
-		opts = {
-		}
-	},
 })
