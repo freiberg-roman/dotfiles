@@ -1,0 +1,45 @@
+[
+  {
+    "clean": ["~/.config"]
+  },
+  {
+    "link": {
+      "~/.config/nvim": {
+        "path": "nvim",
+        "relink": true
+      },
+      "~/.config/tmux": {
+        "path": "tmux",
+        "relink": true
+      },
+      "~/.config/git": {
+        "path": "git",
+        "relink": true
+      },
+      "~/.config/ghostty": {
+        "path": "ghostty",
+        "relink": true
+      },
+      "~/.config/opencode": {
+        "path": "opencode",
+        "relink": true
+      },
+      "~/.config/mise": {
+        "path": "mise",
+        "relink": true
+      }
+    }
+  },
+  {
+    "shell": [
+      {
+        "command": "if ! command -v mise &>/dev/null; then echo 'Installing mise...'; curl -fsSL https://mise.run | sh; fi",
+        "description": "Installing mise if missing"
+      },
+      {
+        "command": "export PATH=\"$HOME/.local/bin:$PATH\" && echo 'Installing tools via mise...' && mise install",
+        "description": "Installing tools configured via mise"
+      }
+    ]
+  }
+]
