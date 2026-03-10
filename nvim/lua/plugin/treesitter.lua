@@ -1,13 +1,11 @@
 return { -- Highlight, edit, and navigate code
   'nvim-treesitter/nvim-treesitter',
-  build = function()
-    pcall(require('nvim-treesitter.install').update { with_sync = true })
-  end,
+  build = ':TSUpdate',
   dependencies = {
     'nvim-treesitter/nvim-treesitter-textobjects',
   },
   config = function()
-    require('nvim-treesitter.configs').setup {
+    require('nvim-treesitter').setup {
       ensure_installed = {
         'go', 'lua', 'python', 'rust', 'regex',
         'bash', 'markdown', 'markdown_inline', 'kdl', 'sql', 'terraform',
