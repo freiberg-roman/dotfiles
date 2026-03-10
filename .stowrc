@@ -1,5 +1,0 @@
---target=~/.config
---ignore=.stowrc
---ignore=LICENSE
---ignore=DS_Store
---override=devbox\.json:~/.local/share/devbox/global/current
