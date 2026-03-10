@@ -8,8 +8,22 @@ DOTBOT_DIR="dotbot"
 DOTBOT_BIN="bin/dotbot"
 BASEDIR="$(cd "$(dirname "${BASH_SOURCE[0]}")" && pwd)"
 
+export PATH="$HOME/.local/bin:$PATH"
+
+if ! command -v mise &>/dev/null; then
+  echo "Installing mise..."
+  curl -fsSL https://mise.run | sh
+fi
+
+echo "Bootstrapping Python via mise for dotbot..."
+MISE_YES=1 mise use -g python@3.11
+eval "$(mise env -s bash)"
+
 cd "${BASEDIR}"
 git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
+
+echo "Cleaning up bootstrapped Python..."
+MISE_YES=1 mise uninstall python@3.11

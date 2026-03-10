@@ -3,7 +3,8 @@
     "defaults": {
       "link": {
         "relink": true,
-        "create": true
+        "create": true,
+        "force": true
       }
     }
   },
@@ -22,10 +23,6 @@
   },
   {
     "shell": [
-      {
-        "command": "if ! command -v mise &>/dev/null; then echo 'Installing mise...'; curl -fsSL https://mise.run | sh; fi",
-        "description": "Installing mise if missing"
-      },
       {
         "command": "export PATH=\"$HOME/.local/bin:$PATH\" && echo 'Installing tools via mise...' && mise install --yes",
         "description": "Installing tools configured via mise"
