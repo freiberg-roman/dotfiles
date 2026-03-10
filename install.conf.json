@@ -1,33 +1,23 @@
 [
   {
+    "defaults": {
+      "link": {
+        "relink": true,
+        "create": true
+      }
+    }
+  },
+  {
     "clean": ["~/.config"]
   },
   {
     "link": {
-      "~/.config/nvim": {
-        "path": "nvim",
-        "relink": true
-      },
-      "~/.config/tmux": {
-        "path": "tmux",
-        "relink": true
-      },
-      "~/.config/git": {
-        "path": "git",
-        "relink": true
-      },
-      "~/.config/ghostty": {
-        "path": "ghostty",
-        "relink": true
-      },
-      "~/.config/opencode": {
-        "path": "opencode",
-        "relink": true
-      },
-      "~/.config/mise": {
-        "path": "mise",
-        "relink": true
-      }
+      "~/.config/nvim": "nvim",
+      "~/.config/tmux": "tmux",
+      "~/.config/git": "git",
+      "~/.config/ghostty": "ghostty",
+      "~/.config/opencode": "opencode",
+      "~/.config/mise": "mise"
     }
   },
   {
@@ -37,7 +27,7 @@
         "description": "Installing mise if missing"
       },
       {
-        "command": "export PATH=\"$HOME/.local/bin:$PATH\" && echo 'Installing tools via mise...' && mise install",
+        "command": "export PATH=\"$HOME/.local/bin:$PATH\" && echo 'Installing tools via mise...' && mise install --yes",
         "description": "Installing tools configured via mise"
       }
     ]
