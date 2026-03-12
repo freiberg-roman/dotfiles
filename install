@@ -36,10 +36,10 @@ append_if_not_exists() {
 
 echo "Configuring ~/.zshrc (default for macOS)..."
 append_if_not_exists "$HOME/.zshrc" 'eval "$('"$HOME"'/.local/bin/mise activate zsh)"'
-append_if_not_exists "$HOME/.zshrc" 'eval "$(atuin init zsh)"'
 append_if_not_exists "$HOME/.zshrc" 'eval "$(starship init zsh)"'
+append_if_not_exists "$HOME/.zshrc" 'eval "$(atuin init zsh)"'
 
 echo "Configuring ~/.bashrc (default for Linux)..."
 append_if_not_exists "$HOME/.bashrc" 'eval "$('"$HOME"'/.local/bin/mise activate bash)"'
-append_if_not_exists "$HOME/.bashrc" 'eval "$(atuin init bash)"'
 append_if_not_exists "$HOME/.bashrc" 'eval "$(starship init bash)"'
+append_if_not_exists "$HOME/.bashrc" 'eval "$(atuin init bash)"'
