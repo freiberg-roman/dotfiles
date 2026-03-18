@@ -9,7 +9,9 @@
     }
   },
   {
-    "clean": ["~/.config"]
+    "clean": [
+      "~/.config"
+    ]
   },
   {
     "link": {
@@ -18,7 +20,8 @@
       "~/.config/git": "git",
       "~/.config/ghostty": "ghostty",
       "~/.config/opencode": "opencode",
-      "~/.config/mise": "mise"
+      "~/.config/mise": "mise",
+      "~/.config/nushell": "nushell"
     }
   },
   {

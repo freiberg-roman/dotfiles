@@ -24,22 +24,3 @@ git -C "${DOTBOT_DIR}" submodule sync --quiet --recursive
 git submodule update --init --recursive "${DOTBOT_DIR}"
 
 "${BASEDIR}/${DOTBOT_DIR}/${DOTBOT_BIN}" -d "${BASEDIR}" -c "${CONFIG}" "${@}"
-
-append_if_not_exists() {
-  local target_file="$1"
-  local line="$2"
-  touch "$target_file"
-  if ! grep -qxF "$line" "$target_file"; then
-    echo "$line" >> "$target_file"
-  fi
-}
-
-echo "Configuring ~/.zshrc (default for macOS)..."
-append_if_not_exists "$HOME/.zshrc" 'eval "$('"$HOME"'/.local/bin/mise activate zsh)"'
-append_if_not_exists "$HOME/.zshrc" 'eval "$(atuin init zsh)"'
-append_if_not_exists "$HOME/.zshrc" 'eval "$(starship init zsh)"'
-
-echo "Configuring ~/.bashrc (default for Linux)..."
-append_if_not_exists "$HOME/.bashrc" 'eval "$('"$HOME"'/.local/bin/mise activate bash)"'
-append_if_not_exists "$HOME/.bashrc" 'eval "$(atuin init bash)"'
-append_if_not_exists "$HOME/.bashrc" 'eval "$(starship init bash)"'
