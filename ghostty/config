@@ -2,3 +2,4 @@ theme = Catppuccin Mocha
 font-size = 15
 mouse-hide-while-typing = true
 window-decoration = true
+command = /bin/bash -l -c "~/.local/bin/mise exec aqua:nushell/nushell -- nu"
