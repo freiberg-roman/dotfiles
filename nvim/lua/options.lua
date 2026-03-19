@@ -42,3 +42,8 @@ vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
 
+-- Nushell support for Neovim terminal and system commands
+vim.o.shell = "nu"
+vim.o.shellcmdflag = "-c"
+vim.o.shellquote = ""
+vim.o.shellxquote = ""
