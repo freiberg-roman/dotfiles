@@ -20,10 +20,11 @@ vim.api.nvim_create_autocmd("LspAttach", {
     client.server_capabilities.semanticTokensProvider = false
     client.server_capabilities.codeActionProvider = false
     client.server_capabilities.renameProvider = false
-    client.server_capabilities.definitionProvider = false
     client.server_capabilities.referencesProvider = false
     client.server_capabilities.signatureHelpProvider = false
     client.server_capabilities.workspaceSymbolProvider = false
+
+    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = args.buf, desc = 'ty: Go to definition' })
 
     local ns = vim.lsp.diagnostic.get_namespace(client.id)
     vim.diagnostic.config({
