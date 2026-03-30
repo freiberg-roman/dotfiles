@@ -1,6 +1,6 @@
 [tools]
 gh = "latest"
-neovim = "latest"
+neovim = "0.12.0"
 opencode = "latest"
 python = "3.11"
 uv = "latest"
@@ -8,3 +8,5 @@ atuin = "latest"
 yazi = "latest"
 tmux = "latest"
 "aqua:nushell/nushell" = "latest"
+ripgrep = "latest"
+tree-sitter = "latest"

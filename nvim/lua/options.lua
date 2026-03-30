@@ -41,6 +41,9 @@ vim.o.tabstop = 4
 vim.o.shiftwidth = 4
 vim.o.expandtab = true
 
+-- Fold settings
+vim.opt.foldlevel = 99
+vim.opt.foldlevelstart = 99
 
 -- Nushell support for Neovim terminal and system commands
 vim.o.shell = "nu"

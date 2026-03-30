@@ -1,13 +1,11 @@
-return {
-  'saghen/blink.cmp',
-  version = '*',
-  dependencies = { "rafamadriz/friendly-snippets" },
-  opts_extend = { "sources.default" },
-  config = function()
-    require('blink.cmp').setup({
-      sources = {
-        default = { "path", "snippets", "buffer" },
-      }
-    })
-  end,
-}
+require('blink.cmp').setup({
+  fuzzy = {
+    prebuilt_binaries = {
+      download = true,
+      force_version = 'v1.10.0',
+    },
+  },
+  sources = {
+    default = { "path", "snippets", "buffer" },
+  }
+})

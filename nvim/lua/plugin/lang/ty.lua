@@ -1,4 +1,4 @@
--- We execute the ty native LSP configuration when lazy.nvim loads this file.
+-- We execute the ty native LSP configuration
 vim.lsp.config('ty', {
   cmd = { 'ty', 'server' },
   filetypes = { 'python' },
@@ -35,6 +35,3 @@ vim.api.nvim_create_autocmd("LspAttach", {
     }, ns)
   end,
 })
-
--- Return an empty table so lazy.nvim doesn't try to parse raw numbers/booleans as plugin specs.
-return {}
