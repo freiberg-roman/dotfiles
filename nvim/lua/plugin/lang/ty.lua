@@ -1,4 +1,3 @@
--- We execute the ty native LSP configuration
 vim.lsp.config('ty', {
   cmd = { 'ty', 'server' },
   filetypes = { 'python' },
@@ -14,24 +13,18 @@ vim.api.nvim_create_autocmd("LspAttach", {
       return
     end
 
+    client.server_capabilities.documentFormattingProvider = true
+    client.server_capabilities.referencesProvider = true
+    client.server_capabilities.workspaceSymbolProvider = true
+
     client.server_capabilities.completionProvider = false
-    client.server_capabilities.documentFormattingProvider = false
     client.server_capabilities.documentRangeFormattingProvider = false
     client.server_capabilities.semanticTokensProvider = false
     client.server_capabilities.codeActionProvider = false
     client.server_capabilities.renameProvider = false
-    client.server_capabilities.referencesProvider = false
     client.server_capabilities.signatureHelpProvider = false
-    client.server_capabilities.workspaceSymbolProvider = false
 
-    vim.keymap.set('n', 'gd', vim.lsp.buf.definition, { buffer = args.buf, desc = 'ty: Go to definition' })
-
-    local ns = vim.lsp.diagnostic.get_namespace(client.id)
-    vim.diagnostic.config({
-      virtual_text = false,
-      signs = false,
-      underline = false,
-      update_in_insert = false,
-    }, ns)
+    vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { buffer = args.buf, desc = 'ty: Go to definition' })
+    vim.keymap.set('n', 'gr', '<cmd>Trouble lsp_references toggle<cr>', { buffer = args.buf, desc = 'ty: Go to references' })
   end,
 })

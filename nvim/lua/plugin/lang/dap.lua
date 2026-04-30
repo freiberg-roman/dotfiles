@@ -17,6 +17,29 @@ dap.listeners.before.event_exited.dapui_config     = function() dapui.close() en
 ----------------------------------------------------------------------
 require("dap-python").setup("python")
 
+dap.configurations.python = {
+  {
+    type = "python",
+    request = "launch",
+    name = "Launch file",
+    program = "${file}",
+    console = "integratedTerminal",
+    justMyCode = false,
+  },
+  {
+    type = "python",
+    request = "launch",
+    name = "Launch file with args",
+    program = "${file}",
+    args = function()
+      local args_string = vim.fn.input("Arguments: ")
+      return vim.split(args_string, " +")
+    end,
+    console = "integratedTerminal",
+    justMyCode = false,
+  },
+}
+
 ------------------------------------------------------------------------
 -- 3. Global key‑maps ----------------------------------------------------
 ------------------------------------------------------------------------
