@@ -9,6 +9,9 @@ vim.api.nvim_create_autocmd('PackChanged', {
     if name == 'nvim-treesitter' and (kind == 'install' or kind == 'update') then
       vim.defer_fn(function() vim.cmd('TSUpdateSync') end, 1000)
     end
+    if name == 'blink.cmp' and (kind == 'install' or kind == 'update') then
+      vim.defer_fn(function() require('blink.cmp').build():wait(60000) end, 1000)
+    end
   end
 })
 
@@ -23,6 +26,7 @@ vim.pack.add({
   gh("catppuccin/nvim"),
   gh("lukas-reineke/indent-blankline.nvim"),
   gh("tpope/vim-sleuth"),
+  gh("saghen/blink.lib"),
   gh("saghen/blink.cmp"),
   gh("rafamadriz/friendly-snippets"),
   gh("lewis6991/gitsigns.nvim"),
