@@ -25,6 +25,6 @@ vim.api.nvim_create_autocmd("LspAttach", {
     client.server_capabilities.signatureHelpProvider = false
 
     vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { buffer = args.buf, desc = 'ty: Go to definition' })
-    vim.keymap.set('n', 'gr', '<cmd>Trouble lsp_references toggle<cr>', { buffer = args.buf, desc = 'ty: Go to references' })
+    vim.keymap.set('n', 'gr', require('telescope.builtin').lsp_references, { buffer = args.buf, desc = 'ty: Go to references' })
   end,
 })

@@ -1,5 +1,10 @@
 require("trouble").setup {
   auto_close = true,
+  modes = {
+    diagnostics = {
+      filter = { severity = vim.diagnostic.severity.ERROR },
+    },
+  },
 }
 vim.diagnostic.config({
   virtual_text = false,

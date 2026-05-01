@@ -5,7 +5,7 @@
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
-      "rev": "dda2666685a5ac3598166577d2e34f1fff6b1637",
+      "rev": "796121278a414eb0b487d115786c603a764ac82a",
       "src": "https://github.com/saghen/blink.lib"
     },
     "friendly-snippets": {
@@ -93,7 +93,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "38e7c5ee572b1fd35b0013eb2e2242152c08ffb8",
+      "rev": "040ee98d5911046a8b83d5fe181af968f137eddb",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "telescope-fzf-native.nvim": {
