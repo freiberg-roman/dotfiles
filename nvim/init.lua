@@ -11,6 +11,13 @@ local _99 = require('99')
 
 local cwd = vim.uv.cwd()
 local basename = vim.fs.basename(cwd)
+local custom_rules = {}
+
+local local_agents = cwd .. "/.agents/skills/"
+if vim.fn.isdirectory(local_agents) == 1 then
+    table.insert(custom_rules, local_agents)
+end
+
 _99.setup({
     provider = _99.Providers.OpenCodeProvider,
     logger = {
@@ -19,7 +26,9 @@ _99.setup({
         print_on_error = true,
     },
     tmp_dir = "./tmp",
-
+    completion = {
+        custom_rules = custom_rules,
+    },
 })
 
 vim.keymap.set("v", "<leader>9v", function()
