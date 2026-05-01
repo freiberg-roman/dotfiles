@@ -12,6 +12,7 @@ require("nvim-dap-virtual-text").setup({
 dap.listeners.before.launch.dapui_config           = function() dapui.open() end
 dap.listeners.before.event_terminated.dapui_config = function() dapui.close() end
 dap.listeners.before.event_exited.dapui_config     = function() dapui.close() end
+dap.defaults.fallback.exception_breakpoints = {"raised", "uncaught"}
 ----------------------------------------------------------------------
 -- 2 Python ----------------------------------------------------------
 ----------------------------------------------------------------------
@@ -24,7 +25,7 @@ dap.configurations.python = {
     name = "Launch file",
     program = "${file}",
     console = "integratedTerminal",
-    justMyCode = false,
+    justMyCode = true,
   },
   {
     type = "python",
@@ -36,7 +37,7 @@ dap.configurations.python = {
       return vim.split(args_string, " +")
     end,
     console = "integratedTerminal",
-    justMyCode = false,
+    justMyCode = true,
   },
 }
 
