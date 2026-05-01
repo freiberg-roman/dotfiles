@@ -53,3 +53,4 @@ vim.keymap.set("n", "<leader>do", function() require("dap").step_out() end, { de
 vim.keymap.set("n", "<leader>dp", function() require("dap").up() end, { desc = "Stack Up" })
 vim.keymap.set("n", "<leader>dn", function() require("dap").down() end, { desc = "Stack Down" })
 vim.keymap.set("n", "<leader>de", function() require("dapui").eval(nil, { enter = true }) end, { desc = "Eval" })
+vim.keymap.set("n", "<leader>dh", function() require("dap.ui.widgets").hover() end, { desc = "Hover Variable/Exception" })
