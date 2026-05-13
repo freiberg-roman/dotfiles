@@ -40,7 +40,7 @@ State.__index = State
 --- @return _99.StateProps
 local function create()
   return {
-    model = "opencode/claude-sonnet-4-5",
+    model = "",
     md_files = {},
     ai_stdout_rows = 3,
     display_errors = false,

@@ -88,16 +88,15 @@ local _99_state
 ---             local cwd = vim.uv.cwd()
 ---             local basename = vim.fs.basename(cwd)
 --- 			_99.setup({
----                 -- provider = _99.Providers.ClaudeCodeProvider,  -- default: OpenCodeProvider
+---                 -- provider = _99.Providers.ClaudeCodeProvider,  -- default: PiProvider
 --- 				logger = {
 --- 					level = _99.DEBUG,
 --- 					path = "/tmp/" .. basename .. ".99.debug",
 --- 					print_on_error = true,
 --- 				},
 ---                 -- When setting this to something that is not inside the CWD tools
----                 -- such as claude code or opencode will have permission issues
+---                 -- such as pi or claude code will have permission issues
 ---                 -- and generation will fail refer to tool documentation to resolve
----                 -- https://opencode.ai/docs/permissions/#external-directories
 ---                 -- https://code.claude.com/docs/en/permissions#read-and-edit
 ---                 tmp_dir = "./tmp",
 ---
@@ -192,7 +191,7 @@ local _99_state
 --- Performs a search across your project with the prompt you provide and return out a list of
 --- locations with notes that will be put into your quick fix list.
 --- @field vibe fun(opts?: _99.ops.Opts): _99.TraceID | nil
---- will ask opencode or whatever provider currently being used to perform a vibe
+--- will ask the provider currently being used to perform a vibe
 --- session.
 --- @field open fun(): nil
 --- Opens a selection window for you to select the last interaction to open
@@ -207,7 +206,7 @@ local _99_state
 --- get to see the logs.
 --- @field stop_all_requests fun(): nil
 --- stops all in flight requests.  this means that the underlying process will
---- be killed (OpenCode) and any result will be discared
+--- be killed and any result will be discarded
 --- @field clear_previous_requests fun(): nil
 --- clears all previous search and visual operations
 --- @field Extensions _99.Extensions
@@ -433,7 +432,7 @@ function _99.setup(opts)
     assert(type(opts.model) == "string", "opts.model is not a string")
     _99_state.model = opts.model
   else
-    local provider = opts.provider or Providers.OpenCodeProvider
+    local provider = opts.provider or Providers.PiProvider
     if provider._get_default_model then
       _99_state.model = provider._get_default_model()
     end
@@ -500,7 +499,7 @@ end
 
 --- @return _99.Providers.BaseProvider
 function _99.get_provider()
-  return _99_state.provider_override or Providers.OpenCodeProvider
+  return _99_state.provider_override or Providers.PiProvider
 end
 
 --- @param provider _99.Providers.BaseProvider

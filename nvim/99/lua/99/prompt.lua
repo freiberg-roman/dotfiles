@@ -296,7 +296,7 @@ function Prompt:start_request(observer)
   --- do not do this during the request context refactoring, but next
   local prompt = table.concat(self.agent_context, "\n")
   local obs = self:_observer(observer)
-  local provider = self._99.provider_override or BaseProvider.OpenCodeProvider
+  local provider = self._99.provider_override or BaseProvider.PiProvider
 
   self:save_prompt(prompt)
   l:debug("start", "prompt", prompt)

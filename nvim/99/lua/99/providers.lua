@@ -142,48 +142,27 @@ function BaseProvider:make_request(query, context, observer)
   context:_set_process(proc)
 end
 
---- @class OpenCodeProvider : _99.Providers.BaseProvider
-local OpenCodeProvider = setmetatable({}, { __index = BaseProvider })
+--- @class PiProvider : _99.Providers.BaseProvider
+local PiProvider = setmetatable({}, { __index = BaseProvider })
 
 --- @param query string
 --- @param context _99.Prompt
 --- @return string[]
-function OpenCodeProvider._build_command(_, query, context)
-  return {
-    "opencode",
-    "run",
-    "--agent",
-    "build",
-    "-m",
-    context.model,
-    query,
-  }
+function PiProvider._build_command(_, query, context)
+  return { "pi", "--model", context.model, "--print", query }
 end
 
 --- @return string
-function OpenCodeProvider._get_provider_name()
-  return "OpenCodeProvider"
+function PiProvider._get_provider_name()
+  return "PiProvider"
 end
 
 --- @return string
-function OpenCodeProvider._get_default_model()
-  return "opencode/minimax-m2.5-free"
-end
-
-function OpenCodeProvider.fetch_models(callback)
-  vim.system({ "opencode", "models" }, { text = true }, function(obj)
-    vim.schedule(function()
-      if obj.code ~= 0 then
-        callback(nil, "Failed to fetch models from opencode")
-        return
-      end
-      local models = vim.split(obj.stdout, "\n", { trimempty = true })
-      callback(models, nil)
-    end)
-  end)
+function PiProvider._get_default_model()
+  return "gemma4:e4b"
 end
 
 return {
   BaseProvider = BaseProvider,
-  OpenCodeProvider = OpenCodeProvider,
+  PiProvider = PiProvider,
 }
