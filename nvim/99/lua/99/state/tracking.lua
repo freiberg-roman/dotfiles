@@ -4,9 +4,6 @@ local Prompt = require("99.prompt")
 --- @field requests _99.Prompt.Serialized[]
 
 --- @class _99.State.Tracking.Config.Options.Counts
---- @field vibe number | nil
---- @field search number | nil
---- @field tutorial number | nil
 --- @field visual number | nil
 ---
 --- @class _99.State.Tracking.Config.Options
@@ -102,7 +99,7 @@ function Tracking:active_count()
   return count
 end
 
---- @param type "search" | "visual" | "tutorial"
+--- @param type "visual"
 --- @return _99.Prompt[]
 function Tracking:request_by_type(type)
   local out = {} --[[ @as _99.Prompt[] ]]
@@ -175,9 +172,6 @@ end
 
 Tracking.__config = {
   serialize_count = {
-    vibe = 1,
-    search = 1,
-    tutorial = 3,
     visual = 0,
   },
 }
@@ -191,9 +185,6 @@ function Tracking.setup(opts)
     --- note to prime: i hate llms sometimes... like seriously.. know the language ya dork
     --- so opts_sa.vibe or sa.vibe if opts_sa.vibe = 0, will yield 0. this is how lua works
     local sa = config.serialize_count
-    sa.vibe = opts_sa.vibe or sa.vibe
-    sa.search = opts_sa.search or sa.search
-    sa.tutorial = opts_sa.tutorial or sa.tutorial
     sa.visual = opts_sa.visual or sa.visual
   end
 end

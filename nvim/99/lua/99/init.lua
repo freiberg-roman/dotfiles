@@ -165,39 +165,15 @@ local _99_state
 --- 			vim.keymap.set("n", "<leader>9x", function()
 --- 				_99.stop_all_requests()
 --- 			end)
----
---- 			vim.keymap.set("n", "<leader>9s", function()
---- 				_99.search()
---- 			end)
 --- 		end,
 --- 	},
 --- ```
----
---- ### Usage
---- I would highly recommend trying out `search` as its the direction the library is going
----
---- ```lua
---- _99.search()
---- ```
----
---- See search for more details
 ---
 --- @docs base
 --- @field setup fun(opts?: _99.Options): nil
 --- Sets up _99.  Must be called for this library to work.  This is how we setup
 --- in flight request spinners, set default values, get completion to work the
 --- way you want it to.
---- @field search fun(opts: _99.ops.SearchOpts): _99.TraceID
---- Performs a search across your project with the prompt you provide and return out a list of
---- locations with notes that will be put into your quick fix list.
---- @field vibe fun(opts?: _99.ops.Opts): _99.TraceID | nil
---- will ask the provider currently being used to perform a vibe
---- session.
---- @field open fun(): nil
---- Opens a selection window for you to select the last interaction to open
---- and display its contents in a way that makes sense for its type.  For
---- search and vibe, it will open the qfix window.  For tutorial, it will open
---- the tutorial window.
 --- @field visual fun(opts: _99.ops.Opts): _99.TraceID
 --- takes your current selection and sends that along with the prompt provided and replaces
 --- your visual selection with the results
@@ -208,9 +184,7 @@ local _99_state
 --- stops all in flight requests.  this means that the underlying process will
 --- be killed and any result will be discarded
 --- @field clear_previous_requests fun(): nil
---- clears all previous search and visual operations
---- @field Extensions _99.Extensions
---- check out Worker for cool abstraction on search and vibe
+--- clears all previous visual operations
 local _99 = {
   DEBUG = Level.DEBUG,
   INFO = Level.INFO,
@@ -283,16 +257,7 @@ end
 --       Window.create_split(data.tutorial, data.buffer, opts)
 --       return
 
---- @param context _99.Prompt
-function _99.open_tutorial(context)
-  local tutorial = context:tutorial_data()
-  Window.create_split(tutorial.tutorial, tutorial.buffer, {
-    split_direction = "vertical",
-    window_opts = {
-      wrap = true,
-    },
-  })
-end
+
 
 function _99.open()
   local requests = _99_state.tracking:successful()
@@ -305,53 +270,11 @@ function _99.open()
       --- section in which i keep track of marks for the lifetime of the
       --- editor and when you close the editor, then it should lose them
       print("visual not supported: i will figure this out... at some point")
-    elseif r.operation == "search" or r.operation == "vibe" then
-      _99.open_qfix_for_request(r)
-    elseif r.operation == "tutorial" then
-      _99.open_tutorial(r)
     end
   end)
 end
 
---- @param opts? _99.ops.Opts
---- @return _99.TraceID
-function _99.vibe(opts)
-  local o = process_opts(opts)
-  local context = Prompt.vibe(_99_state)
-  if o.additional_prompt then
-    context.user_prompt = o.additional_prompt
-    ops.vibe(context, o)
-  else
-    capture_prompt(ops.vibe, "Vibe", context, o)
-  end
-  return context.xid
-end
 
---- @param opts? _99.ops.SearchOpts
---- @return _99.TraceID
-function _99.search(opts)
-  local o = process_opts(opts) --[[ @as _99.ops.SearchOpts ]]
-  local context = Prompt.search(_99_state)
-  if o.additional_prompt then
-    context.user_prompt = o.additional_prompt
-    ops.search(context, o)
-  else
-    capture_prompt(ops.search, "Search", context, o)
-  end
-  return context.xid
-end
-
---- @param opts _99.ops.Opts
-function _99.tutorial(opts)
-  opts = process_opts(opts)
-  local context = Prompt.tutorial(_99_state)
-  if opts.additional_prompt then
-    context.user_prompt = opts.additional_prompt
-    ops.tutorial(context, opts)
-  else
-    capture_prompt(ops.tutorial, "Tutorial", context, opts)
-  end
-end
 
 --- @param opts _99.ops.Opts?
 --- @return _99.TraceID
@@ -380,17 +303,7 @@ function _99.view_logs()
   end)
 end
 
---- @param request _99.Prompt
-function _99.open_qfix_for_request(request)
-  local items = request:qfix_data()
-  if #items == 0 then
-    print("there are no quickfix items to show")
-    return
-  end
 
-  vim.fn.setqflist({}, "r", { title = "99 Results", items = items })
-  vim.cmd("copen")
-end
 
 function _99.stop_all_requests()
   _99_state.tracking:stop_all_requests()
@@ -521,9 +434,5 @@ end
 
 _99.Providers = Providers
 
---- @class _99.Extensions
---- @field Worker _99.Extensions.Worker
-_99.Extensions = {
-  Worker = require("99.extensions.work.worker"),
-}
+_99.Extensions = {}
 return _99

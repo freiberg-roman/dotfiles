@@ -21,9 +21,8 @@ local filetype_map = {
 }
 
 -- luacheck: ignore
---- @alias _99.Prompt.Data _99.Prompt.Data.Search | _99.Prompt.Data.Tutorial | _99.Prompt.Data.Visual | _99.Prompt.Data.Vibe
---- @alias _99.Prompt.Operation "visual" | "tutorial" | "search" | "vibe"
---- @alias _99.Prompt.QFixOperation "search" | "vibe"
+--- @alias _99.Prompt.Data _99.Prompt.Data.Visual
+--- @alias _99.Prompt.Operation "visual"
 --- @alias _99.Prompt.EndingState "failed" | "success" | "cancelled"
 --- @alias _99.Prompt.State "ready" | "requesting" | _99.Prompt.EndingState
 --- @alias _99.Prompt.Cleanup fun(): nil
@@ -31,15 +30,6 @@ local filetype_map = {
 --- @class _99.Prompt.Serialized
 --- @field data _99.Prompt.Data
 --- @field user_prompt string
---- @class _99.Prompt.Data.Search
---- @field type "search"
---- @field qfix_items _99.Search.Result[]
---- @field response string
-
---- @class _99.Prompt.Data.Vibe
---- @field type "vibe"
---- @field response string
---- @field qfix_items _99.Search.Result[]
 
 --- @class _99.Prompt.Data.Visual
 --- @field type "visual"
@@ -47,12 +37,7 @@ local filetype_map = {
 --- @field file_type string
 --- @field range _99.Range
 
---- @class _99.Prompt.Data.Tutorial
---- @field type "tutorial"
---- @field buffer number
---- @field window number
---- @field xid number TODO: we should probably get rid of this.  The request pattern is not quite correct
---- @field tutorial string[]
+
 
 --- @class _99.Prompt
 --- @field md_file_names string[]
@@ -137,24 +122,6 @@ function Prompt:serialize()
   }
 end
 
---- @param _99 _99.State
---- @return _99.Prompt
-function Prompt.vibe(_99)
-  _99:refresh_rules()
-
-  --- @type _99.Prompt
-  local context = setmetatable({}, Prompt)
-  set_defaults(context, _99)
-  context.operation = "vibe"
-  context.data = {
-    type = "vibe",
-    response = "",
-    qfix_items = {},
-  }
-  context.logger:debug("99 Request", "method", "vibe")
-
-  return context
-end
 
 --- @param _99 _99.State
 --- @return _99.Prompt
@@ -194,45 +161,6 @@ function Prompt:summary()
   return string.format("%s: %s", self.operation, table.concat(prompt_str, " "))
 end
 
---- @param _99 _99.State
---- @return _99.Prompt
-function Prompt.tutorial(_99)
-  _99:refresh_rules()
-
-  --- @type _99.Prompt
-  local context = setmetatable({}, Prompt)
-  set_defaults(context, _99)
-  context.operation = "tutorial"
-  context.data = {
-    type = "tutorial",
-    xid = context.xid, -- TODO: i want to get rid of this when i implement rehydration of the data.
-    buffer = 0,
-    window = 0,
-    tutorial = {},
-  }
-  context.logger:debug("99 Request", "method", "tutorial")
-
-  return context
-end
-
---- @param _99 _99.State
---- @return _99.Prompt
-function Prompt.search(_99)
-  _99:refresh_rules()
-
-  --- @type _99.Prompt
-  local context = setmetatable({}, Prompt)
-  set_defaults(context, _99)
-  context.operation = "search"
-  context.data = {
-    type = "search",
-    qfix_items = {},
-    response = "",
-  }
-  context.logger:debug("99 Request", "method", "search")
-
-  return context
-end
 
 --- @param obs _99.Providers.Observer | nil
 function Prompt:_observer(obs)
@@ -266,9 +194,6 @@ end
 
 local allowed_context_types = {
   "visual",
-  "search",
-  "tutorial",
-  "vibe",
 }
 --- @return boolean
 function Prompt:valid()
@@ -346,32 +271,7 @@ function Prompt:visual_data()
   return self.data --[[@as _99.Prompt.Data.Visual]]
 end
 
---- @return _99.Prompt.Data.Tutorial
-function Prompt:tutorial_data()
-  assert(
-    self.data.type == "tutorial",
-    "you cannot get tutorial data if its not type tutorial"
-  )
-  return self.data --[[@as _99.Prompt.Data.Tutorial]]
-end
 
---- @return _99.Prompt.Data.Search
-function Prompt:search_data()
-  assert(
-    self.data.type == "search",
-    "you cannot get search data if its not type search"
-  )
-  return self.data --[[@as _99.Prompt.Data.Search]]
-end
-
---- @return _99.Search.Result[]
-function Prompt:qfix_data()
-  assert(
-    self.data.type == "search" or self.data.type == "vibe",
-    "data type is not search or vibe: " .. self.data.type
-  )
-  return self.data.qfix_items
-end
 
 function Prompt:stop()
   self:cancel()
@@ -487,26 +387,12 @@ function Prompt:finalize()
   end
   self:_read_md_files()
 
-  local ok, visual_data = pcall(self.visual_data, self)
-  if ok then
-    local f_loc =
-      self._99.prompts.get_file_location(self.full_path, visual_data.range)
-    table.insert(self.agent_context, f_loc)
-    table.insert(
-      self.agent_context,
-      self._99.prompts.get_range_text(visual_data.range)
-    )
-  end
   table.insert(
     self.agent_context,
     self._99.prompts.tmp_file_location(self.tmp_file)
   )
 
-  if
-    self.operation == "visual"
-    or self.operation == "tutorial"
-    or self.operation == "search"
-  then
+  if self.operation == "visual" then
     table.insert(self.agent_context, self._99.prompts.only_tmp_file_change())
   end
 
