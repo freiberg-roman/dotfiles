@@ -12,30 +12,6 @@ local nsid = vim.api.nvim_create_namespace("99.marks")
 local Mark = {}
 Mark.__index = Mark
 
---- @param range _99.Range
---- @return _99.Mark
-function Mark.mark_above_range(range)
-  local buffer = range.buffer
-  local start = range.start
-  local line, _ = start:to_vim()
-  local above = line == 0 and line or line - 1
-
-  -- luacheck: ignore
-  local id = nil
-  if above == line then
-    id = vim.api.nvim_buf_set_extmark(buffer, nsid, above, 0, {})
-  else
-    local text = vim.api.nvim_buf_get_lines(buffer, above, above + 1, false)[1]
-    local ending = #text
-    id = vim.api.nvim_buf_set_extmark(buffer, nsid, above, ending, {})
-  end
-
-  return setmetatable({
-    id = id,
-    buffer = buffer,
-    nsid = nsid,
-  }, Mark)
-end
 
 --- @param range _99.Range
 --- @return _99.Mark
@@ -125,16 +101,18 @@ function Mark:set_virtual_text(lines)
   assert(#pos > 0, "extmark is broken.  it does not exist")
   local row, col = pos[1], pos[2]
 
-  local formatted_lines = {}
-  for _, line in ipairs(lines) do
-    table.insert(formatted_lines, {
-      { line, "Comment" },
-    })
+  local virt_text = {}
+  for i, line in ipairs(lines) do
+    if i > 1 then
+      table.insert(virt_text, { " ", "Comment" })
+    end
+    table.insert(virt_text, { line, "Comment" })
   end
 
   vim.api.nvim_buf_set_extmark(self.buffer, nsid, row, col, {
     id = self.id,
-    virt_lines = formatted_lines,
+    virt_text = virt_text,
+    virt_text_pos = "inline",
   })
 end
 

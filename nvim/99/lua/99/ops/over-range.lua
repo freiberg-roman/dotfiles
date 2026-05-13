@@ -18,7 +18,7 @@ local function over_range(context, opts)
 
   local data = context:visual_data()
   local range = data.range
-  local top_mark = Mark.mark_above_range(range)
+  local top_mark = Mark.mark_point(range.buffer, range.start)
   local bottom_mark = Mark.mark_point(range.buffer, range.end_)
   context.marks.top_mark = top_mark
   context.marks.bottom_mark = bottom_mark
@@ -35,10 +35,10 @@ local function over_range(context, opts)
   local top_status = RequestStatus.new(
     250,
     context._99.ai_stdout_rows or 1,
-    "Implementing",
+    "Implementing::> ",
     top_mark
   )
-  local bottom_status = RequestStatus.new(250, 1, "Implementing", bottom_mark)
+  local bottom_status = RequestStatus.new(250, 1, " <::Implementing", bottom_mark)
   local clean_up = make_clean_up(function()
     top_status:stop()
     bottom_status:stop()
@@ -81,11 +81,6 @@ local function over_range(context, opts)
 
         local new_range = Range.from_marks(top_mark, bottom_mark)
         local lines = vim.split(response, "\n")
-
-        --- HACK: i am adding a new line here because above range will add a mark to the line above.
-        --- that way this appears to be added to "the same line" as the visual selection was
-        --- originally take from
-        table.insert(lines, 1, "")
 
         new_range:replace_text(lines)
         context._99:sync()
