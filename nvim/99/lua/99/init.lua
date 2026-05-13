@@ -165,6 +165,10 @@ local _99_state
 --- 			vim.keymap.set("n", "<leader>9x", function()
 --- 				_99.stop_all_requests()
 --- 			end)
+---
+--- 			vim.keymap.set("n", "<leader>9m", function()
+--- 				_99.select_model()
+--- 			end)
 --- 		end,
 --- 	},
 --- ```
@@ -174,6 +178,8 @@ local _99_state
 --- Sets up _99.  Must be called for this library to work.  This is how we setup
 --- in flight request spinners, set default values, get completion to work the
 --- way you want it to.
+--- @field select_model fun(): nil
+--- Opens a Telescope picker to select an available model from the current provider.
 --- @field visual fun(opts: _99.ops.Opts): _99.TraceID
 --- takes your current selection and sends that along with the prompt provided and replaces
 --- your visual selection with the results
@@ -377,6 +383,11 @@ function _99.setup(opts)
 
   local sw = StatusWindow.new(_99_state, opts.in_flight_options)
   sw:start()
+
+  -- Register default keymap for selecting model
+  vim.keymap.set("n", "<leader>9m", function()
+    _99.select_model()
+  end, { desc = "Select 99 Model" })
 end
 
 --- @param md string
@@ -430,6 +441,64 @@ function _99.__debug()
     path = nil,
     level = Level.DEBUG,
   })
+end
+
+function _99.select_model()
+  local provider = _99.get_provider()
+  if not provider.fetch_models then
+    print("Current provider does not support fetching models.")
+    return
+  end
+
+  provider.fetch_models(vim.schedule_wrap(function(models, err)
+    if err or not models then
+      print("Error fetching models: " .. (err or "Unknown error"))
+      return
+    end
+
+    local ok_pickers, pickers = pcall(require, "telescope.pickers")
+    local ok_finders, finders = pcall(require, "telescope.finders")
+    local ok_conf, conf = pcall(require, "telescope.config")
+    local ok_actions, actions = pcall(require, "telescope.actions")
+    local ok_action_state, action_state = pcall(require, "telescope.actions.state")
+
+    if not (ok_pickers and ok_finders and ok_conf and ok_actions and ok_action_state) then
+      print("Telescope is not installed or available.")
+      return
+    end
+
+    local current_model = _99.get_model()
+
+    pickers.new({}, {
+      prompt_title = "Select 99 Model",
+      finder = finders.new_table({
+        results = models,
+        entry_maker = function(entry)
+          local display = entry
+          if entry == current_model or entry:find(current_model, 1, true) then
+            display = entry .. " (current)"
+          end
+          return {
+            value = entry,
+            display = display,
+            ordinal = entry,
+          }
+        end,
+      }),
+      sorter = conf.values.generic_sorter({}),
+      attach_mappings = function(prompt_bufnr, map)
+        actions.select_default:replace(function()
+          actions.close(prompt_bufnr)
+          local selection = action_state.get_selected_entry()
+          if selection then
+            _99.set_model(selection.value)
+            print("99 Model set to: " .. selection.value)
+          end
+        end)
+        return true
+      end,
+    }):find()
+  end))
 end
 
 _99.Providers = Providers

@@ -162,6 +162,30 @@ function PiProvider._get_default_model()
   return "gemma4:e4b"
 end
 
+--- @param callback fun(models: string[]|nil, err: string|nil): nil
+function PiProvider.fetch_models(callback)
+  vim.system({ "pi", "--list-models" }, { text = true }, function(obj)
+    if obj.code ~= 0 then
+      callback(nil, "Failed to fetch models from pi: " .. (obj.stderr or ""))
+      return
+    end
+
+    local models = {}
+    -- skip header
+    local lines = vim.split(obj.stdout, "\n", { trimempty = true })
+    for i = 2, #lines do
+      local line = lines[i]
+      local parts = vim.split(line, "%s+", { trimempty = true })
+      if #parts >= 2 then
+        local provider = parts[1]
+        local model = parts[2]
+        table.insert(models, provider .. "/" .. model)
+      end
+    end
+    callback(models, nil)
+  end)
+end
+
 return {
   BaseProvider = BaseProvider,
   PiProvider = PiProvider,
