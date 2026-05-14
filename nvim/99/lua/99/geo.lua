@@ -238,7 +238,8 @@ function Range.from_visual_selection()
   local buffer = vim.api.nvim_get_current_buf()
   local start_pos = vim.fn.getpos("'<")
   local end_pos = vim.fn.getpos("'>")
-  local start = Point:from_1_based(start_pos[2], start_pos[3])
+  -- Force full line selection by always starting at column 1
+  local start = Point:from_1_based(start_pos[2], 1)
   local end_ = Point:from_1_based(end_pos[2], end_pos[3])
 
   --- visual line mode will select the end point for each row to be int max

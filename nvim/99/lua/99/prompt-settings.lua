@@ -34,8 +34,44 @@ ONLY provide requested changes by writing the change to TEMP_FILE
       name
     )
   end,
-  visual_selection = function(range)
+  --- @param range _99.Range
+  --- @param context_lines? number Defaults to 3
+  --- @return string
+  visual_selection = function(range, context_lines)
+    context_lines = 0
     local file_path = vim.api.nvim_buf_get_name(range.buffer)
+    local total_lines = vim.api.nvim_buf_line_count(range.buffer)
+    local s_row, _ = range.start:to_vim()
+    local e_row, _ = range.end_:to_vim()
+
+    local start_ctx = math.max(0, s_row - context_lines)
+    local end_ctx = math.min(total_lines, e_row + 1 + context_lines)
+
+    local lines_above = vim.api.nvim_buf_get_lines(range.buffer, start_ctx, s_row, false)
+    local lines_below = vim.api.nvim_buf_get_lines(range.buffer, e_row + 1, end_ctx, false)
+
+    local diff_lines = {}
+    for _, line in ipairs(lines_above) do
+      table.insert(diff_lines, "  " .. line)
+    end
+
+    local selected_text = range:to_text()
+    if selected_text ~= "" then
+      local selected_lines = vim.split(selected_text, "\n")
+      for _, line in ipairs(selected_lines) do
+        table.insert(diff_lines, "- " .. line)
+      end
+    end
+
+    table.insert(diff_lines, "+ <TEMP_FILE WILL OVERRIDE THIS>")
+    table.insert(diff_lines, "+ </TEMP_FILE WILL OVERRIDE THIS>")
+
+    for _, line in ipairs(lines_below) do
+      table.insert(diff_lines, "  " .. line)
+    end
+
+    local diff_block = "@@\n" .. table.concat(diff_lines, "\n") .. "\n@@"
+
     return string.format(
       [[
 Task: OVERRIDE the provided selection in the TEMP_FILE using SINGLE write call.
@@ -44,13 +80,11 @@ OVERRIDE means: The TEMP_FILE content replaces ONLY the selection! Other parts o
 File: %s
 Range: %s
 
-<TEMP_FILE WILL OVERRIDE THIS>
 %s
-</TEMP_FILE WILL OVERRIDE THIS>
 ]],
       file_path,
       string.format("Lines %d-%d", range.start.row, range.end_.row),
-      range:to_text()
+      diff_block
     )
   end,
   read_tmp = function()
