@@ -1,4 +1,3 @@
-local RequestStatus = require("99.ops.request_status")
 local Mark = require("99.ops.marks")
 local geo = require("99.geo")
 local make_prompt = require("99.ops.make-prompt")
@@ -31,17 +30,32 @@ local function over_range(context, opts)
     Point.from_mark(bottom_mark)
   )
 
-  local display_ai_status = context._99.ai_stdout_rows > 1
-  local top_status = RequestStatus.new(
-    250,
-    context._99.ai_stdout_rows or 1,
-    "Implementing::> ",
-    top_mark
-  )
-  local bottom_status = RequestStatus.new(250, 1, " <::Implementing", bottom_mark)
+  local ns = vim.api.nvim_create_namespace("99.selection")
+  local s_row, _ = range.start:to_vim()
+  local e_row, _ = range.end_:to_vim()
+
+  -- Static virtual text indicators (no animation)
+  local top_extmark = vim.api.nvim_buf_set_extmark(range.buffer, ns, s_row, 0, {
+    virt_text = { { " ▎ replacing…", "DiagnosticInfo" } },
+    virt_text_pos = "right_align",
+  })
+  local bottom_extmark = vim.api.nvim_buf_set_extmark(range.buffer, ns, e_row, 0, {
+    virt_text = { { " ▎", "DiagnosticInfo" } },
+    virt_text_pos = "right_align",
+  })
+
+  -- Highlight the selected range with a subtle background
+  for row = s_row, e_row do
+    vim.api.nvim_buf_set_extmark(range.buffer, ns, row, 0, {
+      line_hl_group = "Visual",
+      priority = 50,
+    })
+  end
+
   local clean_up = make_clean_up(function()
-    top_status:stop()
-    bottom_status:stop()
+    vim.api.nvim_buf_del_extmark(range.buffer, ns, top_extmark)
+    vim.api.nvim_buf_del_extmark(range.buffer, ns, bottom_extmark)
+    vim.api.nvim_buf_clear_namespace(range.buffer, ns, s_row, e_row + 1)
   end)
 
   local system_cmd = context._99.prompts.prompts.visual_selection(range)
@@ -51,8 +65,6 @@ local function over_range(context, opts)
   context:add_references(refs)
   context:add_clean_up(clean_up)
 
-  top_status:start()
-  bottom_status:start()
   context:start_request(make_observer(context, {
     on_complete = function(status, response)
       if status == "cancelled" then
@@ -86,11 +98,7 @@ local function over_range(context, opts)
         context._99:sync()
       end
     end,
-    on_stdout = function(line)
-      if display_ai_status then
-        top_status:push(line)
-      end
-    end,
+    on_stdout = function(_) end,
   }))
 end
 

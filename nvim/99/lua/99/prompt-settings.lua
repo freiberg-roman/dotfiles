@@ -1,12 +1,8 @@
 --- @class _99.Prompts.SpecificOperations
 --- @field visual_selection fun(range: _99.Range): string
 --- @field prompt fun(prompt: string, action: string, name?: string): string
---- @field role fun(): string
 --- @field replace_instruction fun(): string
 local prompts = {
-  role = function()
-    return [[ You are a software engineering assistant mean to create robust and conanical code ]]
-  end,
   replace_instruction = function()
     return [[
 Task: replace the provided selection using a single replace tool call.
@@ -15,6 +11,7 @@ If needed, add a brief code comment to justify your decision.
 After the replace call the session terminates automatically.
 ]]
   end,
+
   --- @param prompt string
   --- @param action string
   --- @param name? string defaults to DIRECTIONS
@@ -36,18 +33,17 @@ After the replace call the session terminates automatically.
       name
     )
   end,
+
   --- @param range _99.Range
-  --- @param context_lines? number Defaults to 3
   --- @return string
-  visual_selection = function(range, context_lines)
-    context_lines = 0
+  visual_selection = function(range)
     local file_path = vim.api.nvim_buf_get_name(range.buffer)
     local total_lines = vim.api.nvim_buf_line_count(range.buffer)
     local s_row, _ = range.start:to_vim()
     local e_row, _ = range.end_:to_vim()
 
-    local start_ctx = math.max(0, s_row - context_lines)
-    local end_ctx = math.min(total_lines, e_row + 1 + context_lines)
+    local start_ctx = math.max(0, s_row)
+    local end_ctx = math.min(total_lines, e_row + 1)
 
     local lines_above = vim.api.nvim_buf_get_lines(range.buffer, start_ctx, s_row, false)
     local lines_below = vim.api.nvim_buf_get_lines(range.buffer, e_row + 1, end_ctx, false)
@@ -83,7 +79,6 @@ Selected lines with leading (-):
       diff_block
     )
   end,
-
 }
 
 --- @class _99.Prompts
