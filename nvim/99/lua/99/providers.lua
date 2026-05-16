@@ -77,10 +77,12 @@ function BaseProvider:make_request(query, context, observer)
   end
   logger:debug("make_request", "command", command)
 
+  local env = self._get_env and self:_get_env(context) or nil
   local proc = vim.system(
     command,
     {
       text = true,
+      env = env,
       stdout = vim.schedule_wrap(function(err, data)
         logger:debug("stdout", "data", data)
         if context:is_cancelled() then
@@ -145,11 +147,27 @@ end
 --- @class PiProvider : _99.Providers.BaseProvider
 local PiProvider = setmetatable({}, { __index = BaseProvider })
 
+local REPLACE_EXTENSION = vim.fn.expand("~/.pi/agent/extensions/replace-99.ts")
+
 --- @param query string
 --- @param context _99.Prompt
 --- @return string[]
 function PiProvider._build_command(_, query, context)
-  return { "pi", "--model", context.model, "--print", query }
+  return {
+    "pi",
+    "--model", context.model,
+    "--print",
+    "--no-extensions",
+    "-e", REPLACE_EXTENSION,
+    "--tools", "read,bash,replace",
+    query,
+  }
+end
+
+--- @param context _99.Prompt
+--- @return table<string, string>
+function PiProvider._get_env(_, context)
+  return { PI_REPLACE_OUTPUT = context.tmp_file }
 end
 
 --- @return string

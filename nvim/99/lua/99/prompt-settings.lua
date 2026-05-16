@@ -2,13 +2,17 @@
 --- @field visual_selection fun(range: _99.Range): string
 --- @field prompt fun(prompt: string, action: string, name?: string): string
 --- @field role fun(): string
---- @field read_tmp fun(): string
+--- @field replace_instruction fun(): string
 local prompts = {
   role = function()
     return [[ You are a software engineering assistant mean to create robust and conanical code ]]
   end,
-  output_file = function()
+  replace_instruction = function()
     return [[
+Task: replace the provided selection using a single replace tool call.
+Output only the replacement content via the replace tool — no extra commentary.
+If needed, add a brief code comment to justify your decision.
+After the replace call the session terminates automatically.
 ]]
   end,
   --- @param prompt string
@@ -79,35 +83,16 @@ Selected lines with leading (-):
       diff_block
     )
   end,
-  read_tmp = function()
-    return [[
-Task: replace provided selection with single replace call.
-Note:
-User will not interact with you and only read TEMP_FILE output.
-After write to TEMP_FILE terminate session.
-If required, add comment to justify your decision.
 
-]]
-  end,
 }
 
 --- @class _99.Prompts
 local prompt_settings = {
   prompts = prompts,
 
-  --- @param tmp_file string
   --- @return string
-  tmp_file_location = function(tmp_file)
-    return string.format("<TEMP_FILE>%s</TEMP_FILE>", tmp_file)
-  end,
-
-  --- @return string
-  only_tmp_file_change = function()
-    return string.format(
-      "<MustObey>\n%s\n%s\n</MustObey>",
-      prompts.output_file(),
-      prompts.read_tmp()
-    )
+  replace_instruction = function()
+    return prompts.replace_instruction()
   end,
 }
 

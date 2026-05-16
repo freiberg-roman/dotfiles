@@ -387,13 +387,8 @@ function Prompt:finalize()
   end
   self:_read_md_files()
 
-  table.insert(
-    self.agent_context,
-    self._99.prompts.tmp_file_location(self.tmp_file)
-  )
-
   if self.operation == "visual" then
-    table.insert(self.agent_context, self._99.prompts.only_tmp_file_change())
+    table.insert(self.agent_context, self._99.prompts.replace_instruction())
   end
 
   return true, self
