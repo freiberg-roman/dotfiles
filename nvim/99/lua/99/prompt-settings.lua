@@ -9,8 +9,6 @@ local prompts = {
   end,
   output_file = function()
     return [[
-NEVER alter any file other than TEMP_FILE.
-ONLY provide requested changes by writing the change to TEMP_FILE
 ]]
   end,
   --- @param prompt string
@@ -63,9 +61,6 @@ ONLY provide requested changes by writing the change to TEMP_FILE
       end
     end
 
-    table.insert(diff_lines, "+ <TEMP_FILE WILL OVERRIDE THIS>")
-    table.insert(diff_lines, "+ </TEMP_FILE WILL OVERRIDE THIS>")
-
     for _, line in ipairs(lines_below) do
       table.insert(diff_lines, "  " .. line)
     end
@@ -74,12 +69,9 @@ ONLY provide requested changes by writing the change to TEMP_FILE
 
     return string.format(
       [[
-Task: OVERRIDE the provided selection in the TEMP_FILE using SINGLE write call.
-Context: Use your read tool on ORIGINAL_FILE to gather any necessary information and your read + bash tools to gather further required information.
-OVERRIDE means: The TEMP_FILE content replaces ONLY the selection! Other parts of the file stay as is.
 File: %s
-Range: %s
-
+Selected lines in file: %s
+Selected lines with leading (-):
 %s
 ]],
       file_path,
@@ -89,8 +81,12 @@ Range: %s
   end,
   read_tmp = function()
     return [[
-Never attempt to read TEMP_FILE. It is purely for output.
-After write to TEMP_FILE once you should be done -> end session.
+Task: replace provided selection with single replace call.
+Note:
+User will not interact with you and only read TEMP_FILE output.
+After write to TEMP_FILE terminate session.
+If required, add comment to justify your decision.
+
 ]]
   end,
 }
