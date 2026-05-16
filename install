@@ -16,7 +16,7 @@ if ! command -v mise &>/dev/null; then
 fi
 
 echo "Bootstrapping Python via mise for dotbot..."
-MISE_YES=1 mise use -g python@3.11
+MISE_YES=1 mise use -g python@3.12
 eval "$(mise env -s bash)"
 
 cd "${BASEDIR}"

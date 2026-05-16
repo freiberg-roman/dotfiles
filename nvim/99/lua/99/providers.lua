@@ -159,7 +159,7 @@ function PiProvider._build_command(_, query, context)
     "--print",
     "--no-extensions",
     "-e", REPLACE_EXTENSION,
-    "--tools", "read,bash,replace",
+    "--tools", "read,ls,find,grep,replace",
     query,
   }
 end

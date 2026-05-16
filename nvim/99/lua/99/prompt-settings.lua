@@ -6,9 +6,6 @@ local prompts = {
   replace_instruction = function()
     return [[
 Task: replace the provided selection using a single replace tool call.
-Output only the replacement content via the replace tool — no extra commentary.
-If needed, add a brief code comment to justify your decision.
-After the replace call the session terminates automatically.
 ]]
   end,
 
