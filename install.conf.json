@@ -19,9 +19,9 @@
       "~/.config/tmux": "tmux",
       "~/.config/git": "git",
       "~/.config/ghostty": "ghostty",
-      "~/.config/opencode": "opencode",
       "~/.config/mise": "mise",
-      "~/.config/nushell": "nushell"
+      "~/.config/nushell": "nushell",
+      "~/.pi/agent/extensions/replace-99.ts": "pi/extensions/replace-99.ts"
     }
   },
   {
