@@ -15,6 +15,11 @@ vim.g.rustaceanvim = function()
 
   local cfg = require('rustaceanvim.config')
   return {
+    server = {
+      on_attach = function(client, bufnr)
+        vim.keymap.set('n', 'gd', require('telescope.builtin').lsp_definitions, { buffer = bufnr, desc = 'rust: Go to definition' })
+      end,
+    },
     dap = {
       adapter = cfg.get_codelldb_adapter(codelldb_path, liblldb_path),
     },

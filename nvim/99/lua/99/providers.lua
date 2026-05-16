@@ -159,7 +159,7 @@ end
 
 --- @return string
 function PiProvider._get_default_model()
-  return "gemma4:e4b"
+  return "nemotron-3-super-free"
 end
 
 --- @param callback fun(models: string[]|nil, err: string|nil): nil
