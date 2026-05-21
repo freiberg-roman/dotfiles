@@ -177,7 +177,7 @@ end
 
 --- @return string
 function PiProvider._get_default_model()
-  return "nemotron-3-super-free"
+  return "opencode/minimax-m2.7"
 end
 
 --- @param callback fun(models: string[]|nil, err: string|nil): nil

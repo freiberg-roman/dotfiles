@@ -13,8 +13,8 @@ vim.diagnostic.config({
   update_in_insert = false,
 })
 
-vim.keymap.set("n", "<leader>xx", function() require('telescope.builtin').diagnostics({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "Diagnostics (Telescope)" })
-vim.keymap.set("n", "<leader>xX", function() require('telescope.builtin').diagnostics({ bufnr = 0, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Buffer Diagnostics (Telescope)" })
+vim.keymap.set("n", "<leader>xx", function() require('plugin.diag_picker').open({ severity = vim.diagnostic.severity.ERROR }) end, { desc = "Diagnostics (3-panel)" })
+vim.keymap.set("n", "<leader>xX", function() require('plugin.diag_picker').open({ bufnr = 0, severity = vim.diagnostic.severity.ERROR }) end, { desc = "Buffer Diagnostics (3-panel)" })
 vim.keymap.set("n", "<leader>cs", "<cmd>Trouble symbols toggle focus=false<cr>", { desc = "Symbols (Trouble)" })
 vim.keymap.set("n", "<leader>xL", "<cmd>Trouble loclist toggle<cr>", { desc = "Location List (Trouble)" })
 vim.keymap.set("n", "<leader>xQ", "<cmd>Trouble qflist toggle<cr>", { desc = "Quickfix List (Trouble)" })
