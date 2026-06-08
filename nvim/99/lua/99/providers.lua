@@ -177,7 +177,7 @@ end
 
 --- @return string
 function PiProvider._get_default_model()
-  return "opencode/minimax-m2.7"
+  return "ollama/gemma4:12b-mlx"
 end
 
 --- @param callback fun(models: string[]|nil, err: string|nil): nil

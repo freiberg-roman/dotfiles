@@ -1,8 +1,7 @@
 require('blink.cmp').setup({
+  fuzzy = { implementation = 'prefer_rust_with_warning' },
   sources = {
-    default = { "path", "snippets", "buffer" },
-    per_filetype = {
-      rust = { "lsp", "path", "snippets", "buffer" },
-    },
-  }
+    -- Only autocomplete from LSPs. No buffer-word guessing.
+    default = { "lsp", "snippets", "path" },
+  },
 })

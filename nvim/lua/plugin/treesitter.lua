@@ -1,7 +1,7 @@
 -- Install parsers
 require('nvim-treesitter').install({
   'go', 'lua', 'python', 'rust', 'regex',
-  'bash', 'markdown', 'markdown_inline', 'kdl', 'sql', 'terraform',
+  'bash', 'markdown', 'markdown_inline', 'latex', 'kdl', 'sql', 'terraform',
   'html', 'css', 'yaml', 'json', 'toml',
   'ninja', 'rst', 'ron'
 })

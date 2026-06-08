@@ -1,11 +1,11 @@
 {
   "plugins": {
     "blink.cmp": {
-      "rev": "43cb60895ee109161ae5cffa26444018cc07e570",
+      "rev": "3db7326f54b73df4789e0fd6274bedda33975fea",
       "src": "https://github.com/saghen/blink.cmp"
     },
     "blink.lib": {
-      "rev": "c09dd66e9ad97e1a7777f3fa5f0504ca2e877231",
+      "rev": "b127d48bf8e9ac9cf41f6e0fbead317503f76558",
       "src": "https://github.com/saghen/blink.lib"
     },
     "friendly-snippets": {
@@ -13,7 +13,7 @@
       "src": "https://github.com/rafamadriz/friendly-snippets"
     },
     "gitsigns.nvim": {
-      "rev": "dd3f588bacbeb041be6facf1742e42097f62165d",
+      "rev": "25050e4ed39e628282831d4cbecb1850454ce915",
       "src": "https://github.com/lewis6991/gitsigns.nvim"
     },
     "indent-blankline.nvim": {
@@ -29,7 +29,7 @@
       "src": "https://github.com/echasnovski/mini.icons"
     },
     "mini.nvim": {
-      "rev": "11afe78a10570fe1d0c7ed0b6fc2b5b19098cb45",
+      "rev": "ff8b3580935818ef2f21bdd651f057a2ae071eab",
       "src": "https://github.com/echasnovski/mini.nvim"
     },
     "noice.nvim": {
@@ -93,7 +93,7 @@
       "src": "https://github.com/MeanderingProgrammer/render-markdown.nvim"
     },
     "rustaceanvim": {
-      "rev": "8727e34809a7448b10ebc660c1425c3e808a0004",
+      "rev": "47d56f1d375dc8522085a18ca04a4dab71129cdc",
       "src": "https://github.com/mrcjkb/rustaceanvim"
     },
     "telescope-fzf-native.nvim": {
