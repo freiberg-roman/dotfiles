@@ -1,7 +1,7 @@
 # Prefer a preinstalled mise (e.g. on OmarchyLinux) and fall back to the
 # local install in ~/.local/bin. Detect before prepending ~/.local/bin so a
 # system mise wins over the local one.
-let mise = (if (which mise | is-not-empty) { which mise | first | get path } else { $"($nu.home-path)/.local/bin/mise" })
+let mise = (if (which mise | is-not-empty) { which mise | first | get path } else { $"($env.HOME)/.local/bin/mise" })
 
 $env.PATH = ($env.PATH | split row (char esep) | prepend "~/.local/bin")
 
